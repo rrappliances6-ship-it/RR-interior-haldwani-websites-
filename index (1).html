@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>RR 3D Kitchen Planner — V1</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Arial,sans-serif;background:#f4f7f9;overflow:hidden}
+header{height:58px;background:#08b4c7;color:white;display:flex;align-items:center;padding:0 14px;gap:14px}
+header .brand{font-size:20px;font-weight:700}.spacer{flex:1}
+button,select,input{font:inherit}button{border:0;border-radius:8px;padding:9px 12px;cursor:pointer}
+#app{height:calc(100vh - 58px);display:flex}
+#sidebar{width:310px;background:white;border-right:1px solid #ddd;overflow:auto;padding:14px;z-index:5}
+#viewport{position:relative;flex:1;min-width:0}
+#canvas{width:100%;height:100%;display:block}
+h3{margin:8px 0 12px}.section{border-bottom:1px solid #e5e5e5;padding-bottom:14px;margin-bottom:14px}
+.row{display:flex;gap:8px;align-items:center;margin:8px 0}.row>*{flex:1}
+label{font-size:12px;color:#555;display:block;margin-top:7px}
+input[type=number],input[type=text],select{width:100%;padding:9px;border:1px solid #ccc;border-radius:7px;background:white}
+.action{width:100%;margin:5px 0;background:#08b4c7;color:white;font-weight:600}
+.secondary{background:#eef3f5;color:#222}.danger{background:#d9534f;color:white}
+.unit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.unit-btn{background:#f5f7f8;border:1px solid #ddd;padding:10px;text-align:left}
+.unit-btn strong{display:block;font-size:13px}.unit-btn small{color:#666}
+#mobileToggle{display:none}
+#hint{position:absolute;left:14px;bottom:14px;background:rgba(255,255,255,.92);padding:10px 12px;border-radius:10px;box-shadow:0 2px 12px #0002;font-size:12px}
+@media(max-width:760px){
+ #sidebar{position:absolute;left:0;top:0;bottom:0;width:290px;transform:translateX(-100%);transition:.2s;box-shadow:3px 0 18px #0002}
+ #sidebar.open{transform:translateX(0)}
+ #mobileToggle{display:block;background:transparent;color:white;font-size:25px;padding:0}
+ header{height:54px}.brand{font-size:17px!important}
+}
+</style>
+</head>
+<body>
+<header>
+<button id="mobileToggle">☰</button>
+<div class="brand">RR 3D Kitchen Planner</div>
+<div class="spacer"></div>
+<button id="resetBtn" class="secondary">Reset</button>
+</header>
+
+<div id="app">
+<aside id="sidebar">
+<div class="section">
+<h3>Room</h3>
+<div class="row"><div><label>Length (mm)</label><input id="roomL" type="number" value="4200"></div><div><label>Width (mm)</label><input id="roomW" type="number" value="3000"></div></div>
+<div class="row"><div><label>Height (mm)</label><input id="roomH" type="number" value="3000"></div><div></div></div>
+<button class="action" id="applyRoom">Apply Room Size</button>
+</div>
+
+<div class="section">
+<h3>Add Unit</h3>
+<div class="unit-grid">
+<button class="unit-btn" data-type="base"><strong>Base Cabinet</strong><small>Single / double</small></button>
+<button class="unit-btn" data-type="drawer"><strong>Drawer Unit</strong><small>2 drawer</small></button>
+<button class="unit-btn" data-type="wall"><strong>Wall Cabinet</strong><small>Single door</small></button>
+<button class="unit-btn" data-type="glass"><strong>Glass Cabinet</strong><small>Glass front</small></button>
+<button class="unit-btn" data-type="tall"><strong>Tall Cabinet</strong><small>Storage</small></button>
+<button class="unit-btn" data-type="pantry"><strong>Pantry</strong><small>Vertical handle</small></button>
+<button class="unit-btn" data-type="sink"><strong>Sink Unit</strong><small>Built-in sink</small></button>
+<button class="unit-btn" data-type="hob"><strong>Hob Unit</strong><small>Cooktop</small></button>
+<button class="unit-btn" data-type="chimney"><strong>Chimney</strong><small>Appliance</small></button>
+<button class="unit-btn" data-type="fridge"><strong>Refrigerator</strong><small>Appliance</small></button>
+<button class="unit-btn" data-type="panel"><strong>Plain Panel</strong><small>Free panel</small></button>
+<button class="unit-btn" data-type="light"><strong>Ceiling Light</strong><small>Free placement</small></button>
+</div>
+</div>
+
+<div class="section">
+<h3>Selected Unit</h3>
+<div id="noSelection" style="font-size:13px;color:#777">Select an object in the 3D room.</div>
+<div id="editor" style="display:none">
+<label>Name</label><input id="objName" type="text">
+<div class="row"><div><label>Width</label><input id="objW" type="number"></div><div><label>Height</label><input id="objH" type="number"></div></div>
+<div class="row"><div><label>Depth</label><input id="objD" type="number"></div><div><label>Rotation °</label><input id="objR" type="number"></div></div>
+<div class="row"><div><label>Position X</label><input id="objX" type="number"></div><div><label>Position Z</label><input id="objZ" type="number"></div></div>
+<label>Door / Front Material</label><input id="doorColor" type="color" value="#eeeeee">
+<label>Cabinet Material</label><input id="cabColor" type="color" value="#c69b63">
+<label>Worktop</label><input id="topColor" type="color" value="#4b3828">
+<label>Handle</label>
+<select id="handle">
+<option>Normal</option><option>G-Profile</option><option>L-Shape</option><option>Profile</option><option>Handle-less</option>
+</select>
+<label>Handle Orientation</label>
+<select id="handleOrientation"><option>Horizontal</option><option>Vertical</option></select>
+<button class="action" id="updateObj">Apply Changes</button>
+<button class="secondary action" id="duplicateBtn">Duplicate</button>
+<button class="danger action" id="deleteBtn">Delete</button>
+</div>
+</div>
+
+<div class="section">
+<h3>View</h3>
+<button class="secondary action" id="frontView">Front View</button>
+<button class="secondary action" id="topView">Top View</button>
+<button class="secondary action" id="homeView">3D View</button>
+</div>
+</aside>
+
+<main id="viewport">
+<canvas id="canvas"></canvas>
+<div id="hint">Drag empty space to orbit • Scroll to zoom • Click an object to edit</div>
+</main>
+</div>
+
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+
+const canvas=document.getElementById('canvas');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(canvas.clientWidth,canvas.clientHeight,false);
+renderer.shadowMap.enabled=true;
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0xdfe7ea);
+const camera=new THREE.PerspectiveCamera(45,canvas.clientWidth/canvas.clientHeight,.1,100);
+camera.position.set(6,5,7);
+const controls=new OrbitControls(camera,canvas);
+controls.enableDamping=true;
+controls.target.set(0,1.2,0);
+
+scene.add(new THREE.HemisphereLight(0xffffff,0x777777,2));
+const dl=new THREE.DirectionalLight(0xffffff,2); dl.position.set(4,8,5); dl.castShadow=true; scene.add(dl);
+
+let room={L:4.2,W:3,H:3};
+let roomGroup=new THREE.Group(); scene.add(roomGroup);
+let objects=[];
+let selected=null;
+const raycaster=new THREE.Raycaster(), mouse=new THREE.Vector2();
+
+function mat(c,rough=.55){return new THREE.MeshStandardMaterial({color:c,roughness:rough})}
+function box(w,h,d,c){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c));m.castShadow=true;m.receiveShadow=true;return m}
+function clearGroup(g){while(g.children.length)g.remove(g.children[0])}
+
+function buildRoom(){
+ clearGroup(roomGroup);
+ const floor=box(room.L,.08,room.W,0x777777); floor.position.y=-.04; roomGroup.add(floor);
+ const wallMat=mat(0xf1eee5);
+ const back=box(room.L,room.H,.08,0xf1eee5); back.position.set(0,room.H/2,-room.W/2); roomGroup.add(back);
+ const left=box(.08,room.H,room.W,0xe8e6df); left.position.set(-room.L/2,room.H/2,0); roomGroup.add(left);
+ const right=box(.08,room.H,room.W,0xe8e6df); right.position.set(room.L/2,room.H/2,0); roomGroup.add(right);
+}
+buildRoom();
+
+function cabinet(type){
+ const g=new THREE.Group(); g.userData={type,name:type};
+ let w=.6,h=.72,d=.56, y=h/2;
+ if(type==='wall'||type==='glass'){h=.7;y=1.9}
+ if(type==='tall'||type==='pantry'){w=.6;h=2.1;y=h/2}
+ if(type==='chimney'){w=.75;h=.55;d=.4;y=2.15}
+ if(type==='fridge'){w=.9;h=2.0;d=.7;y=h/2}
+ if(type==='panel'){w=.05;h=2.0;d=1.2;y=h/2}
+ if(type==='light'){w=.45;h=.06;d=.45;y=2.9}
+ if(type==='hob'){w=.6;h=.08;d=.52;y=.82}
+ if(type==='sink'){w=.6;h=.72;d=.56;y=h/2}
+ if(type==='drawer'){w=.6;h=.72;d=.56;y=h/2}
+ g.userData.dim={w,h,d}; g.userData.colors={door:'#eeeeee',cab:'#c69b63',top:'#4b3828'};
+ if(type==='light'){const a=box(w,h,d,0xffffff);a.userData.role='main';g.add(a);g.position.y=y;return g}
+ const body=box(w,h,d,0xc69b63); body.userData.role='body'; g.add(body);
+ if(type!=='panel' && type!=='hob' && type!=='chimney' && type!=='fridge'){
+   const front=box(Math.max(.02,w-.08),Math.max(.02,h-.1),.035,0xeeeeee);
+   front.position.set(0,0,d/2+.018); front.userData.role='front'; g.add(front);
+ }
+ if(type==='hob'){const hob=box(w-.04,.025,d-.04,0x151515);hob.position.y=.045;g.add(hob);for(let i=-1;i<=1;i++){const r=new THREE.Mesh(new THREE.CylinderGeometry(.075,.075,.015,32),mat(0x222222));r.rotation.x=Math.PI/2;r.position.set(i*.18,.065,0);g.add(r)}}
+ if(type==='sink'){const s=box(.5,.035,.38,0xbfc5c7);s.position.set(0,.38,0);g.add(s)}
+ if(type==='chimney'){const hood=box(.72,.16,.38,0xdddddd);hood.position.y=-.18;g.add(hood);const neck=box(.25,.5,.22,0xdddddd);neck.position.y=.22;g.add(neck)}
+ if(type==='fridge'){const door=box(w-.04,h-.04,.04,0xf4f4f4);door.position.z=d/2+.02;g.add(door)}
+ if(type==='pantry'||type==='tall'||type==='base'||type==='drawer'||type==='wall'||type==='glass'){
+   addHandle(g,w,h,d,'Normal','Horizontal');
+ }
+ g.position.y=y;
+ return g;
+}
+function addHandle(g,w,h,d,type,orientation){
+ if(type==='Handle-less')return;
+ const old=g.getObjectByName('handle'); if(old)g.remove(old);
+ const len=Math.min(.32,w*.6), thick=.025;
+ const hh=box(orientation==='Horizontal'?len:thick,orientation==='Horizontal'?thick:len,thick,0x444444);
+ hh.name='handle'; hh.position.set(0,0,d/2+.055); g.add(hh);
+}
+function addObject(type){
+ const g=cabinet(type);
+ g.position.set(0, type==='wall'||type==='chimney'||type==='tall'||type==='pantry'||type==='fridge'?1.5:.36, 0);
+ if(type==='light')g.position.y=2.8;
+ if(type==='hob')g.position.y=.78;
+ if(type==='chimney')g.position.y=2.2;
+ scene.add(g); objects.push(g); select(g);
+}
+function select(o){
+ selected=o; objects.forEach(x=>x.traverse(m=>{if(m.material&&m.material.emissive)m.material.emissive.set(0)}));
+ document.getElementById('noSelection').style.display='none';document.getElementById('editor').style.display='block';
+ const u=o.userData, d=u.dim||{w:o.scale.x,h:o.scale.y,d:o.scale.z};
+ document.getElementById('objName').value=u.name||u.type;
+ document.getElementById('objW').value=Math.round((d.w||1)*1000);
+ document.getElementById('objH').value=Math.round((d.h||1)*1000);
+ document.getElementById('objD').value=Math.round((d.d||1)*1000);
+ document.getElementById('objR').value=Math.round(THREE.MathUtils.radToDeg(o.rotation.y));
+ document.getElementById('objX').value=Math.round(o.position.x*1000);
+ document.getElementById('objZ').value=Math.round(o.position.z*1000);
+ if(u.colors){document.getElementById('doorColor').value=u.colors.door;document.getElementById('cabColor').value=u.colors.cab;document.getElementById('topColor').value=u.colors.top}
+}
+function applySelected(){
+ if(!selected)return;
+ const u=selected.userData;
+ u.name=document.getElementById('objName').value;
+ const w=+document.getElementById('objW').value/1000,h=+document.getElementById('objH').value/1000,d=+document.getElementById('objD').value/1000;
+ if(u.dim){u.dim={w,h,d}; selected.scale.set(w/u.dim.w||1,h/u.dim.h||1,d/u.dim.d||1)} 
+ // Rebuilding geometry for accurate dimensions keeps this V1 simple.
+ const type=u.type; const pos=selected.position.clone(), rot=selected.rotation.y;
+ scene.remove(selected); objects=objects.filter(x=>x!==selected);
+ const fresh=cabinet(type); fresh.userData.name=u.name; fresh.userData.dim={w,h,d}; fresh.position.set(+document.getElementById('objX').value/1000,h/2,+document.getElementById('objZ').value/1000);
+ if(type==='wall'||type==='glass')fresh.position.y=+document.getElementById('objH').value/2000+1.55;
+ if(type==='chimney')fresh.position.y=2.2;
+ if(type==='light')fresh.position.y=2.8;
+ if(type==='hob')fresh.position.y=h;
+ if(type!=='light'&&type!=='chimney'&&type!=='hob')fresh.scale.set(w/(fresh.userData.dim.w||w),h/(fresh.userData.dim.h||h),d/(fresh.userData.dim.d||d));
+ fresh.rotation.y=THREE.MathUtils.degToRad(+document.getElementById('objR').value);
+ const cabCol=document.getElementById('cabColor').value, doorCol=document.getElementById('doorColor').value;
+ fresh.traverse(m=>{if(!m.isMesh)return;if(m.userData.role==='body')m.material.color.set(cabCol);if(m.userData.role==='front')m.material.color.set(doorCol)});
+ fresh.userData.colors={door:doorCol,cab:cabCol,top:document.getElementById('topColor').value};
+ scene.add(fresh);objects.push(fresh);select(fresh);
+}
+function removeSelected(){if(!selected)return;scene.remove(selected);objects=objects.filter(x=>x!==selected);selected=null;document.getElementById('noSelection').style.display='block';document.getElementById('editor').style.display='none'}
+document.querySelectorAll('.unit-btn').forEach(b=>b.onclick=()=>addObject(b.dataset.type));
+document.getElementById('applyRoom').onclick=()=>{room.L=+roomL.value/1000;room.W=+roomW.value/1000;room.H=+roomH.value/1000;buildRoom()};
+document.getElementById('updateObj').onclick=applySelected;
+document.getElementById('deleteBtn').onclick=removeSelected;
+document.getElementById('duplicateBtn').onclick=()=>{if(!selected)return;const n=selected.clone(true);n.position.x+=.35;n.userData=JSON.parse(JSON.stringify(selected.userData));scene.add(n);objects.push(n);select(n)};
+document.getElementById('resetBtn').onclick=()=>location.reload();
+document.getElementById('handle').onchange=()=>{if(!selected)return;addHandle(selected,selected.userData.dim.w,selected.userData.dim.h,selected.userData.dim.d,document.getElementById('handle').value,document.getElementById('handleOrientation').value)};
+document.getElementById('handleOrientation').onchange=()=>{if(!selected)return;addHandle(selected,selected.userData.dim.w,selected.userData.dim.h,selected.userData.dim.d,document.getElementById('handle').value,document.getElementById('handleOrientation').value)};
+document.getElementById('frontView').onclick=()=>{camera.position.set(0,1.6,8);controls.target.set(0,1,0)};
+document.getElementById('topView').onclick=()=>{camera.position.set(0,8,0.01);controls.target.set(0,0,0)};
+document.getElementById('homeView').onclick=()=>{camera.position.set(6,5,7);controls.target.set(0,1.2,0)};
+document.getElementById('mobileToggle').onclick=()=>document.getElementById('sidebar').classList.toggle('open');
+
+canvas.addEventListener('pointerdown',e=>{
+ const r=canvas.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;
+ raycaster.setFromCamera(mouse,camera);const hits=raycaster.intersectObjects(objects,true);
+ if(hits.length){let o=hits[0].object;while(o.parent&&!objects.includes(o))o=o.parent;if(objects.includes(o))select(o)}
+});
+function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}
+addEventListener('resize',resize);resize();
+
+function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera)} animate();
+</script>
+</body>
+</html>
