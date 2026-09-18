@@ -1,0 +1,1124 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>RR 3D Kitchen Planner — V15</title>
+<style>
+:root{--teal:#08b5c7;--teal2:#087f8c;--dark:#172126;--line:#dfe5e8;--soft:#f5f7f8;--panel:#fff;--muted:#68757b}*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;font-family:Inter,Arial,Helvetica,sans-serif;background:#edf2f4;color:var(--dark)}button,input,select{font:inherit}button{cursor:pointer;border:0}.top{height:58px;background:linear-gradient(90deg,#08b5c7,#08a8b9);color:#fff;display:flex;align-items:center;gap:12px;padding:0 14px;box-shadow:0 2px 10px #0002;position:relative;z-index:20}.brand{font-weight:800;font-size:20px;letter-spacing:.1px}.top .spacer{flex:1}.top button{background:#fff;color:#222;border-radius:8px;padding:8px 12px;font-weight:700}.layout{height:calc(100vh - 58px);display:flex}.side{width:355px;background:#fff;border-right:1px solid var(--line);overflow:auto;padding:10px;z-index:10}.sec{border-bottom:1px solid var(--line);padding:9px 0 13px;margin-bottom:5px}.sec h3{margin:0 0 9px;font-size:16px}.tabs{display:flex;gap:5px;overflow:auto;margin-bottom:8px}.tab{white-space:nowrap;background:#eef4f5;color:#445257;border-radius:7px;padding:7px 9px;font-size:11px;font-weight:700}.tab.active{background:var(--teal);color:#fff}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.unit{background:var(--soft);border:1px solid #dde4e7;border-radius:9px;padding:7px;text-align:left;min-height:82px;transition:.12s}.unit:hover{border-color:var(--teal);background:#effcfd;transform:translateY(-1px)}.thumb{height:43px;border-radius:6px;background:linear-gradient(145deg,#fdfdfd,#e6ecee);border:1px solid #d7dfe2;display:flex;align-items:center;justify-content:center;margin-bottom:6px;overflow:hidden}.thumb .cab{width:38px;height:30px;border:2px solid #7e6b55;background:#c9a16d;position:relative}.thumb .cab:after{content:'';position:absolute;left:5px;right:5px;top:5px;bottom:5px;border:1px solid #eee}.thumb .drawer{width:42px;height:29px;border:2px solid #777;background:#d4d4d4;display:flex;flex-direction:column;gap:2px;padding:3px}.thumb .drawer i{height:5px;border:1px solid #999;background:#eee}.thumb .glass{width:38px;height:30px;border:2px solid #888;background:#bfe5f2aa}.thumb .appl{width:35px;height:31px;border:2px solid #777;background:#ddd}.thumb .round{width:20px;height:20px;border-radius:50%;border:3px solid #555}.unit b{display:block;font-size:12px}.unit small{display:block;color:var(--muted);margin-top:3px;font-size:10px}.row{display:flex;gap:8px}.row>div{flex:1}label{font-size:10px;color:var(--muted);display:block;margin:7px 0 4px}input[type=number],input[type=text],select{width:100%;padding:8px;border:1px solid #cfd7da;border-radius:7px;background:#fff}input[type=color]{width:100%;height:36px;padding:2px;border:1px solid #cfd7da;border-radius:7px;background:#fff}.primary{width:100%;background:var(--teal);color:#fff;padding:9px;border-radius:7px;font-weight:700;margin-top:8px}.gray{width:100%;background:#eef2f4;color:#222;padding:9px;border-radius:7px;font-weight:700;margin-top:7px}.danger{width:100%;background:#d9534f;color:#fff;padding:9px;border-radius:7px;font-weight:700;margin-top:7px}.mini{display:flex;gap:5px}.mini button{flex:1;background:#eef2f4;padding:7px;border-radius:7px;font-size:11px;font-weight:700}.toolbar{position:absolute;top:12px;left:12px;right:12px;display:flex;gap:6px;z-index:4;flex-wrap:wrap}.toolbar button{background:#fff;border-radius:7px;padding:8px 10px;box-shadow:0 2px 9px #0002;font-weight:700}.canvaswrap{position:relative;flex:1;min-width:0}.canvas{width:100%;height:100%;display:block}.hint{position:absolute;bottom:12px;left:12px;background:rgba(255,255,255,.94);padding:9px 11px;border-radius:8px;box-shadow:0 2px 10px #0002;font-size:12px}.pill{display:inline-block;padding:3px 7px;border-radius:99px;background:#e8f9fb;color:#007d89;font-size:10px;font-weight:700;margin-bottom:7px}.pdfbox{border:1px dashed #b9c5c9;border-radius:8px;padding:10px;background:#fafcfc}.pdf-list{margin-top:8px;display:flex;flex-direction:column;gap:6px}.pdf-item{display:flex;align-items:center;gap:6px;background:#f1f4f5;padding:7px;border-radius:7px;font-size:12px}.pdf-item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pdf-item button{background:#fff;border:1px solid #ddd;border-radius:5px;padding:4px 7px}.status{font-size:11px;color:#4e5b60;background:#f5f7f8;border-radius:7px;padding:7px;margin-top:7px}.mobile{display:none}@media(max-width:760px){.side{position:absolute;left:0;top:0;bottom:0;width:320px;transform:translateX(-102%);transition:.2s;box-shadow:4px 0 18px #0003}.side.open{transform:translateX(0)}.mobile{display:block!important;background:transparent!important;color:#fff!important;font-size:24px!important;padding:0!important}.brand{font-size:16px}.top .spacer{display:block}}
+
+/* V6 professional planner enhancements */
+.v6tools{display:grid;grid-template-columns:1fr 1fr;gap:6px}.v6tools button{background:#eef4f5;padding:8px;border-radius:7px;font-size:11px;font-weight:800}.v6tools button.active{background:var(--teal);color:#fff}.v6badge{display:inline-block;background:#172126;color:#fff;border-radius:5px;padding:2px 6px;font-size:9px;margin-left:5px}.feature-row{display:flex;gap:6px}.feature-row button{flex:1}.status.v6{background:#e9fafc;border-left:3px solid var(--teal)}.v7anim{display:flex;gap:6px}.v7anim button{flex:1}
+</style>
+<style id="v9-style">
+.v9-badge{position:fixed;top:12px;right:14px;z-index:9999;background:#111;color:#fff;padding:7px 11px;border-radius:999px;font:700 11px system-ui;box-shadow:0 5px 18px #0003}.v9-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:10px;z-index:10000;font:600 13px system-ui;opacity:0;pointer-events:none;transition:.25s}.v9-toast.show{opacity:1}.v9-wall-tools{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.v9-wall-tools button{font-size:11px}.v9-snap{display:flex;gap:5px;align-items:center;font-size:11px}.v9-snap input{accent-color:#111}.v9-info{font-size:11px;line-height:1.45;opacity:.72;margin-top:6px}
+</style></head>
+<body><div class="v9-badge">RR PLANNER V15</div><div id="v9Toast" class="v9-toast"></div>
+<header class="top"><button id="menu" class="mobile">☰</button><div class="brand">RR 3D Kitchen Planner <span style="font-size:11px;opacity:.8">V15</span></div><div class="spacer"></div><button id="reset">Reset</button></header>
+<div class="layout">
+<aside class="side" id="side">
+<section class="sec"><h3>Room</h3><div class="row"><div><label>Length (mm)</label><input id="roomL" type="number" value="4200"></div><div><label>Width (mm)</label><input id="roomW" type="number" value="3000"></div></div><div><label>Height (mm)</label><input id="roomH" type="number" value="3000"></div><button class="primary" id="applyRoom">Apply Room Size</button><div class="mini"><button id="floorBtn">Floor</button><button id="wallsBtn">Walls</button><button id="centerBtn">Center View</button></div></section>
+<section class="sec"><h3>Add Unit</h3><div class="tabs"><button class="tab active" data-tab="cabinets">Cabinets</button><button class="tab" data-tab="appliances">Appliances</button><button class="tab" data-tab="free">Free Elements</button></div>
+<div class="grid catalog" data-panel="cabinets">
+<button class="unit" data-type="base"><div class="thumb"><span class="cab"></span></div><b>1 Door Unit</b><small>Base cabinet</small></button><button class="unit" data-type="drawer1"><div class="thumb"><span class="drawer"><i></i></span></div><b>1 Drawer</b><small>Drawer unit</small></button><button class="unit" data-type="drawer2"><div class="thumb"><span class="drawer"><i></i><i></i></span></div><b>2 Drawers</b><small>Drawer unit</small></button><button class="unit" data-type="drawer3"><div class="thumb"><span class="drawer"><i></i><i></i><i></i></span></div><b>3 Drawers</b><small>Drawer unit</small></button><button class="unit" data-type="drawer4"><div class="thumb"><span class="drawer"><i></i><i></i><i></i><i></i></span></div><b>4 Drawers</b><small>Drawer unit</small></button><button class="unit" data-type="basket1"><div class="thumb"><span class="drawer"><i></i></span></div><b>1 Basket</b><small>Basket unit</small></button><button class="unit" data-type="basket2"><div class="thumb"><span class="drawer"><i></i><i></i></span></div><b>2 Baskets</b><small>Basket unit</small></button><button class="unit" data-type="basket3"><div class="thumb"><span class="drawer"><i></i><i></i><i></i></span></div><b>3 Baskets</b><small>Basket unit</small></button><button class="unit" data-type="basket4"><div class="thumb"><span class="drawer"><i></i><i></i><i></i><i></i></span></div><b>4 Baskets</b><small>Basket unit</small></button><button class="unit" data-type="corner"><div class="thumb"><span class="cab" style="transform:rotate(45deg);width:27px"></span></div><b>Corner Unit</b><small>L-corner</small></button><button class="unit" data-type="wall"><div class="thumb"><span class="cab"></span></div><b>Wall Cabinet</b><small>Upper unit</small></button><button class="unit" data-type="glass"><div class="thumb"><span class="glass"></span></div><b>Glass Shutter</b><small>Glass front</small></button><button class="unit" data-type="tall"><div class="thumb"><span class="cab" style="height:35px"></span></div><b>Tall Unit</b><small>Full height</small></button><button class="unit" data-type="pantry"><div class="thumb"><span class="cab" style="height:35px"></span></div><b>Pantry</b><small>Vertical / horizontal</small></button><button class="unit" data-type="shelf"><div class="thumb"><span class="cab" style="background:transparent;border-width:2px 0"></span></div><b>Open Shelf</b><small>Display</small></button>
+</div><div class="grid catalog" data-panel="appliances" style="display:none"><button class="unit" data-type="sink"><div class="thumb"><span class="round"></span></div><b>Built-in Sink</b><small>Sink + tap</small></button><button class="unit" data-type="hob"><div class="thumb"><span class="appl"></span></div><b>Built-in Hob</b><small>Cooktop</small></button><button class="unit" data-type="chimney"><div class="thumb"><span class="appl" style="width:42px;height:18px"></span></div><b>Chimney</b><small>Wall mounted</small></button><button class="unit" data-type="fridge"><div class="thumb"><span class="appl" style="height:35px"></span></div><b>Refrigerator</b><small>Free standing</small></button><button class="unit" data-type="oven"><div class="thumb"><span class="appl" style="height:35px"></span></div><b>Microwave / Oven</b><small>Built-in</small></button><button class="unit" data-type="dishwasher"><div class="thumb"><span class="appl"></span></div><b>Dishwasher</b><small>Under counter</small></button><button class="unit" data-type="dustbin"><div class="thumb"><span class="appl"></span></div><b>Dustbin</b><small>Pull-out</small></button><button class="unit" data-type="light"><div class="thumb"><span class="round" style="border-radius:4px;width:32px;height:9px"></span></div><b>Ceiling Light</b><small>Free placement</small></button></div>
+<div class="grid catalog" data-panel="free" style="display:none"><button class="unit" data-type="panel"><div class="thumb"><span class="cab" style="width:15px"></span></div><b>Plain Panel</b><small>Free size / position</small></button><button class="unit" data-type="door"><div class="thumb"><span class="cab" style="width:18px;height:34px"></span></div><b>Door</b><small>Room door</small></button><button class="unit" data-type="window"><div class="thumb"><span class="glass" style="width:42px;height:24px"></span></div><b>Window</b><small>Room window</small></button><button class="unit" data-type="worktop"><div class="thumb"><span class="cab" style="width:48px;height:8px"></span></div><b>Worktop</b><small>Free placement</small></button></div>
+</section>
+<section class="sec"><h3>Selected Unit</h3><div id="none" style="font-size:13px;color:#788186">3D room में किसी object पर click करें।</div><div id="editor" style="display:none"><label>Name</label><input id="name" type="text"><div class="row"><div><label>Width (mm)</label><input id="w" type="number"></div><div><label>Height (mm)</label><input id="h" type="number"></div></div><div class="row"><div><label>Depth (mm)</label><input id="d" type="number"></div><div><label>Rotation (°)</label><input id="r" type="number"></div></div><div class="row"><div><label>Position X (mm)</label><input id="x" type="number"></div><div><label>Position Z (mm)</label><input id="z" type="number"></div></div><label>Position Y (mm)</label><input id="y" type="number"><label>Door / Front</label><input id="door" type="color" value="#eeeeee"><label>Cabinet</label><input id="cab" type="color" value="#c69b63"><label>Worktop</label><input id="top" type="color" value="#4b3828"><label>Handle Style</label><select id="handle"><option>Normal</option><option>G-Profile</option><option>L-Shape</option><option>Profile</option><option>Handle-less</option></select><label>Handle Orientation</label><select id="orientation"><option>Horizontal</option><option>Vertical</option></select><label>Pantry / Handle Direction</label><select id="doorDir"><option>Horizontal</option><option>Vertical</option></select><button class="primary" id="applyObj">Apply Changes</button><div class="v7anim"><button class="gray" id="animateObj">Open / Pull</button><button class="gray" id="closeObj">Close / Push</button></div><button class="gray" id="duplicate">Duplicate</button><button class="danger" id="delete">Delete</button></div></section>
+<section class="sec"><h3>Designer PDF Library</h3><div class="pdfbox"><div style="font-size:12px">अलग-अलग folders से colour/design PDF चुनें और planner में रखें।</div><input id="pdfInput" type="file" accept="application/pdf" multiple style="margin-top:8px;width:100%"><div id="pdfList" class="pdf-list"></div></div></section>
+<section class="sec"><h3>Import 3D Model</h3><div style="font-size:12px;color:#687277">Designer अपना .glb model add कर सकता है।</div><input id="modelInput" type="file" accept=".glb,.gltf" style="margin-top:8px;width:100%"></section>
+<section class="sec"><h3>View</h3><button class="gray" id="front">Front View</button><button class="gray" id="topView">Top View</button><button class="gray" id="home">3D View</button></section>
+</aside>
+<main class="canvaswrap"><div class="toolbar"><button id="saveImg">Save Image</button><button id="saveProject">Save Project</button><button id="loadProject">Load Project</button><input id="projectFile" type="file" accept="application/json" hidden></div><canvas id="canvas" class="canvas"></canvas><div class="hint">Drag empty area = orbit • Drag selected object = move • Scroll = zoom • Click = edit • Collision OFF</div></main>
+</div>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+const $=id=>document.getElementById(id), canvas=$('canvas');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,preserveDrawingBuffer:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;
+const scene=new THREE.Scene();scene.background=new THREE.Color(0xdfe7ea);const camera=new THREE.PerspectiveCamera(45,1,.05,100);camera.position.set(6,4.7,7);const controls=new OrbitControls(camera,canvas);controls.enableDamping=true;controls.target.set(0,1.2,0);
+scene.add(new THREE.HemisphereLight(0xffffff,0x777777,2));const light=new THREE.DirectionalLight(0xffffff,2.2);light.position.set(4,8,5);light.castShadow=true;scene.add(light);
+let room={L:4.2,W:3,H:3},roomGroup=new THREE.Group(),objects=[],selected=null;scene.add(roomGroup);
+const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();
+const defaults={door:'#eeeeee',cab:'#c69b63',top:'#4b3828'};
+function material(c,rough=.5){return new THREE.MeshStandardMaterial({color:c,roughness:rough})}function box(w,h,d,c,role=''){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material(c));m.castShadow=true;m.receiveShadow=true;m.userData.role=role;return m}function clear(g){while(g.children.length)g.remove(g.children[0])}
+function buildRoom(){clear(roomGroup);const floor=box(room.L,.08,room.W,0x777777);floor.position.y=-.04;roomGroup.add(floor);const back=box(room.L,room.H,.08,0xf2eee5);back.position.set(0,room.H/2,-room.W/2);roomGroup.add(back);const l=box(.08,room.H,room.W,0xe8e6df);l.position.set(-room.L/2,room.H/2,0);roomGroup.add(l);const r=box(.08,room.H,room.W,0xe8e6df);r.position.set(room.L/2,room.H/2,0);roomGroup.add(r)}buildRoom();
+const spec={base:[.6,.72,.56,.36],drawer1:[.6,.72,.56,.36],drawer2:[.6,.72,.56,.36],drawer3:[.6,.72,.56,.36],drawer4:[.6,.72,.56,.36],basket1:[.6,.72,.56,.36],basket2:[.6,.72,.56,.36],basket3:[.6,.72,.56,.36],basket4:[.6,.72,.56,.36],corner:[.9,.72,.9,.36],wall:[.6,.72,.35,1.9],glass:[.6,.72,.35,1.9],tall:[.6,2.1,.6,1.05],pantry:[.6,2.1,.6,1.05],shelf:[.7,.7,.35,1.8],sink:[.6,.72,.56,.36],hob:[.6,.08,.56,.78],chimney:[.75,.55,.4,2.2],fridge:[.9,2,.7,1],oven:[.6,2,.6,1],dishwasher:[.6,.72,.56,.36],dustbin:[.4,.72,.5,.36],light:[.45,.06,.45,2.8],panel:[.08,2,.05,1],worktop:[1.8,.06,.65,.78]};
+function frame(g,w,h,d,c,th=.045){
+  const z=d/2+.018, col=c;
+  g.add(box(w,th,d,col,'toprail')).position.y=h/2-th/2;
+  g.add(box(w,th,d,col,'bottomrail')).position.y=-h/2+th/2;
+  g.add(box(th,h-2*th,d,col,'siderailL')).position.x=-w/2+th/2;
+  g.add(box(th,h-2*th,d,col,'siderailR')).position.x=w/2-th/2;
+}
+function addHandle(g,w,h,d,style,ori){
+  const old=g.getObjectByName('handle'); if(old)g.remove(old); if(style==='Handle-less')return;
+  const z=d/2+.075, col=0x444444, len=Math.min(.34,w*.62), th=.025;
+  if(style==='G-Profile'||style==='Profile'){
+    const rail=box(ori==='Horizontal'?w-.10:th,h-.10,th,col,'handle'); rail.position.set(ori==='Horizontal'?0:(w/2-.06),0,z);g.add(rail);
+  } else if(style==='L-Shape'){
+    const a=box(th,ori==='Horizontal'?len:th,th,col,'handle'); const b=box(ori==='Horizontal'?len:th,th,th,col,'handle');
+    if(ori==='Horizontal'){a.position.set(-w/2+.09,h/2-.10,z);b.position.set(-w/2+.09+len/2,h/2-.10,z);}
+    else {a.position.set(w/2-.10,-len/2,z);b.position.set(w/2-.10,-len/2,z);}
+    g.add(a);g.add(b);
+  } else {
+    const hh=box(ori==='Horizontal'?len:th,ori==='Horizontal'?th:len,th,col,'handle');hh.position.set(ori==='Horizontal'?0:w*.28,ori==='Horizontal'?h*.34:0,z);g.add(hh);
+  }
+}
+function carcass(g,w,h,d,c){
+  const sideT=.018, backT=.018;
+  const left=box(sideT,h,d,c,'carcass');left.position.x=-w/2+sideT/2;g.add(left);
+  const right=box(sideT,h,d,c,'carcass');right.position.x=w/2-sideT/2;g.add(right);
+  const bottom=box(w-.02,sideT,d,c,'carcass');bottom.position.y=-h/2+sideT/2;g.add(bottom);
+  const back=box(w-.02,h-.02,backT,c,'back');back.position.z=-d/2+backT/2;g.add(back);
+  const top=box(w-.02,sideT,d,c,'carcass');top.position.y=h/2-sideT/2;g.add(top);
+}
+function shutter(g,w,h,d,c,glass=false){
+  const fh=h-.10, fw=w-.08, z=d/2+.025;
+  if(glass){
+    const m=new THREE.MeshPhysicalMaterial({color:0xbfe5f2,transparent:true,opacity:.38,roughness:.12,metalness:.05});
+    const q=new THREE.Mesh(new THREE.BoxGeometry(fw,fh,.018),m);q.name='glassFront';q.position.z=z;g.add(q);frame(g,fw,fh,.025,0xe8e8e8,.025);
+  }else{
+    const f=box(fw,fh,.025,c,'front');f.position.z=z;g.add(f);frame(g,fw,fh,.025,0xd7d7d7,.025);
+    const inset=box(fw-.08,fh-.08,.008,new THREE.Color(c).offsetHSL(0,0,-.035),'inset');inset.position.z=z+.018;g.add(inset);
+  }
+}
+function drawers(g,w,h,d,n,c){
+  const gap=.018, dh=(h-.08-(n-1)*gap)/n;
+  for(let i=0;i<n;i++){
+    const y=h/2-.04-dh/2-i*(dh+gap); const dr=box(w-.08,dh,.035,c,'drawerFront');dr.position.set(0,y,d/2+.028);g.add(dr);
+    const pull=box(Math.min(.28,w*.45),.018,.025,0x444444,'handle');pull.position.set(0,y+.10,d/2+.065);g.add(pull);
+  }
+}
+function baskets(g,w,h,d,n){
+  const gap=.025, bh=(h-.08-(n-1)*gap)/n;
+  for(let i=0;i<n;i++){
+    const y=h/2-.04-bh/2-i*(bh+gap); const tray=box(w-.10,.035,d-.08,0x777777,'basket');tray.position.set(0,y,d/2+.005);g.add(tray);
+    for(let k=-2;k<=2;k++){const bar=box(w-.12,.014,.018,0x555555,'basketBar');bar.position.set(0,y+k*bh*.20,d/2+.035);g.add(bar)}
+  }
+}
+function make(type,custom={}){
+  let [w,h,d,y]=spec[type]||spec.base;w=custom.w||w;h=custom.h||h;d=custom.d||d;
+  const g=new THREE.Group();g.userData={type,name:custom.name||type,dim:{w,h,d},colors:{...defaults,...(custom.colors||{})},handle:custom.handle||'Normal',orientation:custom.orientation||'Horizontal'};
+  const c=new THREE.Color(g.userData.colors.cab).getHex(), dc=new THREE.Color(g.userData.colors.door).getHex();
+  if(['base','wall','glass','tall','pantry','corner','drawer1','drawer2','drawer3','drawer4','basket1','basket2','basket3','basket4','sink','dishwasher','dustbin'].includes(type))carcass(g,w,h,d,c);
+  if(type==='base')shutter(g,w,h,d,dc,false);
+  if(type==='wall')shutter(g,w,h,d,dc,false);
+  if(type==='glass')shutter(g,w,h,d,dc,true);
+  if(type==='drawer1')drawers(g,w,h,d,1,dc);
+  if(type==='drawer2')drawers(g,w,h,d,2,dc);
+  if(type==='drawer3')drawers(g,w,h,d,3,dc);
+  if(type==='drawer4')drawers(g,w,h,d,4,dc);
+  if(type==='basket1')baskets(g,w,h,d,1);
+  if(type==='basket2')baskets(g,w,h,d,2);
+  if(type==='basket3')baskets(g,w,h,d,3);
+  if(type==='basket4')baskets(g,w,h,d,4);
+  if(type==='corner'){
+    const a=box(w*.58,h,d*.46,c,'cornerBody');a.position.x=-w*.21;g.add(a);const b=box(w*.46,h,d*.58,c,'cornerBody');b.position.z=-d*.21;g.add(b);
+    const f=box(w*.54,h-.10,.025,dc,'front');f.position.set(-w*.20,d*.24,.0);f.rotation.y=Math.PI/2;g.add(f);
+    const f2=box(w*.025,h-.10,d*.54,dc,'front');f2.position.set(-.02,-d*.20,d*.0);g.add(f2);
+  }
+  if(type==='tall')shutter(g,w,h,d,dc,false);
+  if(type==='pantry'){
+    const panels=custom.orientation==='Vertical'?2:4; const gap=.02; const ph=(h-.08-(panels-1)*gap)/panels;
+    for(let i=0;i<panels;i++){const p=box(w-.08,ph,.025,dc,'pantryPanel');p.position.set(0,h/2-.04-ph/2-i*(ph+gap),d/2+.025);g.add(p)}
+  }
+  if(type==='shelf'){for(let i=-1;i<=1;i++){const sh=box(w-.05,.035,d-.03,dc,'shelf');sh.position.y=i*.22;g.add(sh)} }
+  if(type==='sink'){
+    const basin=new THREE.Mesh(new THREE.BoxGeometry(.50,.035,.38),new THREE.MeshStandardMaterial({color:0xbfc5c7,metalness:.65,roughness:.22}));basin.position.set(0,.38,d/2+.02);g.add(basin);
+    const tap=box(.035,.28,.035,0x888888,'tap');tap.position.set(.12,.56,.05);g.add(tap);const spout=new THREE.Mesh(new THREE.TorusGeometry(.07,.012,10,24,Math.PI),new THREE.MeshStandardMaterial({color:0x888888,metalness:.7}));spout.rotation.x=Math.PI/2;spout.position.set(.12,.69,.05);g.add(spout);
+  }
+  if(type==='hob'){
+    const hb=box(w-.04,.025,d-.04,0x151515,'hobTop');hb.position.y=.045;g.add(hb);for(let i=0;i<4;i++){const rr=new THREE.Mesh(new THREE.CylinderGeometry(.075,.075,.015,32),material(0x222222));rr.rotation.x=Math.PI/2;rr.position.set((i%2-.5)*.28,.065,(Math.floor(i/2)-.5)*.22);g.add(rr)}
+  }
+  if(type==='chimney'){
+    const hood=box(.72,.14,.40,0xd8d8d8,'appliance');hood.position.y=-.18;g.add(hood);const neck=box(.25,.52,.22,0xe6e6e6,'appliance');neck.position.y=.18;g.add(neck);const filter=box(.58,.025,.28,0x444444,'filter');filter.position.y=-.245;g.add(filter)
+  }
+  if(type==='fridge'){
+    const body=box(w,h,d,0xe8e8e8,'appliance');g.add(body);for(let i=0;i<2;i++){const dr=box(w-.05,h/2-.04,.035,0xf5f5f5,'fridgeDoor');dr.position.set(0,i?h/4:-h/4,d/2+.025);g.add(dr);const handle=box(.018,h/2-.20,.025,0x777777,'handle');handle.position.set(w*.38,i?h/4:-h/4,d/2+.06);g.add(handle)}
+  }
+  if(type==='oven'){
+    const body=box(w,h,d,0xf0f0f0,'appliance');g.add(body);const door=box(w-.06,.72,.035,0x252525,'ovenGlass');door.position.set(0,.05,d/2+.025);g.add(door);const bar=box(w*.60,.025,.03,0x555555,'handle');bar.position.set(0,.48,d/2+.06);g.add(bar)
+  }
+  if(type==='dishwasher'){const dr=box(w-.05,h-.05,.035,0xd8d8d8,'front');dr.position.z=d/2+.025;g.add(dr);const bar=box(w*.55,.018,.025,0x555555,'handle');bar.position.set(0,.25,d/2+.06);g.add(bar)}
+  if(type==='dustbin'){for(let i=0;i<2;i++){const dr=box(w-.06,.28,.035,0x777777,'bin');dr.position.set((i-.5)*.12,0.12,d/2+.03);g.add(dr)}}
+  if(type==='door'){const panel=box(w,h,.06,0x8b6848,'roomDoor');panel.position.z=-d/2;g.add(panel);const knob=new THREE.Mesh(new THREE.SphereGeometry(.045,20,12),material(0xd0a74b));knob.position.set(w*.30,0,.04-d/2);g.add(knob)}
+  if(type==='window'){const glass=box(w,h,.035,0x9ed9e8,'windowGlass');glass.position.z=-d/2;g.add(glass);for(const xx of [-w/6,w/6]){const mull=box(.025,h,.05,0xffffff,'windowFrame');mull.position.set(xx,0,.02-d/2);g.add(mull)}const sill=box(w+.08,.06,d+.04,0xffffff,'windowSill');sill.position.set(0,-h/2,.01-d/2);g.add(sill)}
+  if(type==='light'){const lm=box(w,.035,d,0xfafafa,'light');g.add(lm);const glow=box(w*.65,.012,d*.65,0xffffff,'glow');glow.position.y=-.025;g.add(glow);g.position.y=y;return g}
+  if(type==='panel'){g.add(box(w,h,d,dc,'panel'));g.position.y=y;return g}
+  if(type==='worktop'){g.add(box(w,h,d,g.userData.colors.top,'worktop'));g.position.y=y;return g}
+  if(['base','wall','glass','tall','pantry','corner'].includes(type))addHandle(g,w,h,d,g.userData.handle,g.userData.orientation);
+  // V5: visible cabinet hardware/details
+  if(['base','wall','glass','tall','pantry','corner'].includes(type)){
+    const footL=box(.07,.08,.07,0x333333,'foot'); footL.position.set(-w*.38,-h/2-.04,d*.32); g.add(footL);
+    const footR=box(.07,.08,.07,0x333333,'foot'); footR.position.set(w*.38,-h/2-.04,d*.32); g.add(footR);
+  }
+  g.position.y=y;return g
+}
+function place(g,type){g.position.x=0;g.position.z=0;g.position.y=spec[type][3];if(['wall','glass'].includes(type))g.position.y=1.9;if(type==='chimney')g.position.y=2.2;if(type==='light')g.position.y=2.8;if(type==='hob'||type==='worktop')g.position.y=.78;if(type==='fridge'||type==='oven')g.position.y=spec[type][3];if(type==='panel')g.position.y=1;if(type==='door')g.position.y=1.1;if(type==='window')g.position.y=1.7;}
+function add(type,custom={}){const g=make(type,custom);place(g,type);scene.add(g);objects.push(g);select(g)}
+function select(o){selected=o;const u=o.userData; $('none').style.display='none';$('editor').style.display='block';$('name').value=u.name||u.type;$('w').value=Math.round(u.dim.w*1000);$('h').value=Math.round(u.dim.h*1000);$('d').value=Math.round(u.dim.d*1000);$('r').value=Math.round(THREE.MathUtils.radToDeg(o.rotation.y));$('x').value=Math.round(o.position.x*1000);$('z').value=Math.round(o.position.z*1000);$('y').value=Math.round(o.position.y*1000);$('door').value=u.colors?.door||defaults.door;$('cab').value=u.colors?.cab||defaults.cab;$('top').value=u.colors?.top||defaults.top;$('handle').value=u.handle||'Normal';$('orientation').value=u.orientation||'Horizontal';$('doorDir').value=u.orientation||'Horizontal'}
+function apply(){if(!selected)return;const old=selected, u=old.userData;const w=+$('w').value/1000,h=+$('h').value/1000,d=+$('d').value/1000;const data={name:$('name').value,w,h,d,colors:{door:$('door').value,cab:$('cab').value,top:$('top').value},handle:$('handle').value,orientation:$('orientation').value};const fresh=make(u.type,data);fresh.position.set(+$('x').value/1000,+$('y').value/1000,+$('z').value/1000);fresh.rotation.y=THREE.MathUtils.degToRad(+$('r').value);scene.remove(old);objects=objects.filter(x=>x!==old);scene.add(fresh);objects.push(fresh);select(fresh)}
+function del(){if(!selected)return;scene.remove(selected);objects=objects.filter(x=>x!==selected);selected=null;$('none').style.display='block';$('editor').style.display='none'}
+function duplicate(){if(!selected)return;const u=selected.userData;const n=make(u.type,{name:u.name+' Copy',w:u.dim.w,h:u.dim.h,d:u.dim.d,colors:u.colors,handle:u.handle,orientation:u.orientation});n.position.copy(selected.position);n.position.x+=.35;n.rotation.copy(selected.rotation);scene.add(n);objects.push(n);select(n)}
+document.querySelectorAll('.unit').forEach(b=>b.onclick=()=>add(b.dataset.type));$('applyRoom').onclick=()=>{room={L:+$('roomL').value/1000,W:+$('roomW').value/1000,H:+$('roomH').value/1000};buildRoom()};$('applyObj').onclick=apply;$('delete').onclick=del;$('duplicate').onclick=duplicate;$('reset').onclick=()=>location.reload();$('menu').onclick=()=>$('side').classList.toggle('open');
+$('handle').onchange=()=>{if(selected){selected.userData.handle=$('handle').value;addHandle(selected,selected.userData.dim.w,selected.userData.dim.h,selected.userData.dim.d,$('handle').value,$('orientation').value)}};$('orientation').onchange=()=>{if(selected){selected.userData.orientation=$('orientation').value;addHandle(selected,selected.userData.dim.w,selected.userData.dim.h,selected.userData.dim.d,$('handle').value,$('orientation').value)}};$('doorDir').onchange=()=>{if(selected)selected.userData.orientation=$('doorDir').value};
+$('front').onclick=()=>{camera.position.set(0,1.7,8);controls.target.set(0,1,0)};$('topView').onclick=()=>{camera.position.set(0,8,.01);controls.target.set(0,0,0)};$('home').onclick=()=>{camera.position.set(6,4.7,7);controls.target.set(0,1.2,0)};
+canvas.addEventListener('pointerdown',e=>{const r=canvas.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(objects,true);if(hits.length){let o=hits[0].object;while(o.parent&&!objects.includes(o))o=o.parent;if(objects.includes(o))select(o)}});
+function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}addEventListener('resize',resize);resize();
+// V7: simple cabinet interaction animation (doors/drawers/baskets/pantry)
+function animateSelected(open){if(!selected)return;const g=selected;const t=g.userData.type;const dur=360;const start=performance.now();
+  let targets=[];g.traverse(ch=>{if(ch.userData.role==='front'||ch.userData.role==='drawerFront'||ch.userData.role==='basket'||ch.userData.role==='pantryPanel'){targets.push(ch)}});
+  targets.forEach((ch,i)=>{if(!ch.userData.v7base)ch.userData.v7base={p:ch.position.clone(),r:ch.rotation.clone()};const b=ch.userData.v7base;let ep=b.p.clone(),er=b.r.clone();if(open){if(ch.userData.role==='front'||ch.userData.role==='pantryPanel'){er.y=(i%2?-.18:.18);ep.z+=.16}else{ep.z+=.18}}else{er.copy(b.r);ep.copy(b.p)};ch.userData.v7target={p:ep,r:er}});
+  function tick(now){const q=Math.min(1,(now-start)/dur);const e=q<.5?2*q*q:1-Math.pow(-2*q+2,2)/2;targets.forEach(ch=>{const b=ch.userData.v7base,t=ch.userData.v7target;ch.position.lerpVectors(b.p,t.p,e);ch.rotation.x=THREE.MathUtils.lerp(b.r.x,t.r.x,e);ch.rotation.y=THREE.MathUtils.lerp(b.r.y,t.r.y,e);ch.rotation.z=THREE.MathUtils.lerp(b.r.z,t.r.z,e)});if(q<1)requestAnimationFrame(tick)}requestAnimationFrame(tick)}
+$('animateObj').onclick=()=>animateSelected(true);$('closeObj').onclick=()=>animateSelected(false);
+// PDF library: local browser only, no server required.
+let pdfs=[];$('pdfInput').onchange=e=>{for(const f of e.target.files){const url=URL.createObjectURL(f);pdfs.push({name:f.name,url});const row=document.createElement('div');row.className='pdf-item';row.innerHTML='<span>📄 '+f.name+'</span><button>Download</button>';row.querySelector('button').onclick=()=>{const a=document.createElement('a');a.href=url;a.download=f.name;a.click()};$('pdfList').appendChild(row)}};
+// Project save/load (scene objects, not PDF binaries)
+function projectData(){return {version:'V13',room,objects:objects.map(o=>({type:o.userData.type,name:o.userData.name,dim:o.userData.dim,colors:o.userData.colors,handle:o.userData.handle,orientation:o.userData.orientation,pos:o.position.toArray(),rot:o.rotation.y}))}}
+$('saveProject').onclick=()=>{const blob=new Blob([JSON.stringify(projectData(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='RR-kitchen-project.json';a.click()};$('loadProject').onclick=()=>$('projectFile').click();$('projectFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{const p=JSON.parse(rd.result);room=p.room;['roomL','roomW','roomH'].forEach((id,i)=>$(id).value=Math.round([room.L,room.W,room.H][i]*1000));buildRoom();objects.forEach(o=>scene.remove(o));objects=[];for(const q of p.objects){const o=make(q.type,{name:q.name,w:q.dim.w,h:q.dim.h,d:q.dim.d,colors:q.colors,handle:q.handle,orientation:q.orientation});o.position.fromArray(q.pos);o.rotation.y=q.rot;scene.add(o);objects.push(o)}selected=null;$('none').style.display='block';$('editor').style.display='none'};rd.readAsText(f)};
+$('saveImg').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='RR-kitchen-design.png';a.click()};
+$('modelInput').onchange=e=>{const f=e.target.files[0];if(!f)return;const loader=new GLTFLoader();const url=URL.createObjectURL(f);loader.load(url,gltf=>{const o=gltf.scene;o.userData={type:'imported-model',name:f.name,dim:{w:1,h:1,d:1},colors:defaults};o.position.set(0,0,0);scene.add(o);objects.push(o);select(o)},undefined,err=>alert('3D model load नहीं हुआ। GLB file try करें.'))};
+// V5 UI: category tabs
+for(const tab of document.querySelectorAll('.tab')) tab.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('.catalog').forEach(p=>p.style.display=p.dataset.panel===tab.dataset.tab?'grid':'none')};
+// V5: mouse/touch object dragging on the floor plane (no collision / no snapping)
+let dragging=null,dragOffset=new THREE.Vector3(),dragPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0),dragPoint=new THREE.Vector3();
+function pointerNDC(e){const r=canvas.getBoundingClientRect();return new THREE.Vector2(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1)}
+canvas.addEventListener('pointerdown',e=>{if(e.button!==undefined&&e.button!==0)return;const ndc=pointerNDC(e);ray.setFromCamera(ndc,camera);const hits=ray.intersectObjects(objects,true);if(hits.length){let o=hits[0].object;while(o.parent&&!objects.includes(o))o=o.parent;if(objects.includes(o)){select(o);controls.enabled=false;dragging=o;const hit=ray.intersectPlane(dragPlane,dragPoint);if(hit)dragOffset.subVectors(o.position,dragPoint);canvas.setPointerCapture?.(e.pointerId)}}});
+canvas.addEventListener('pointermove',e=>{if(!dragging)return;const ndc=pointerNDC(e);ray.setFromCamera(ndc,camera);if(ray.intersectPlane(dragPlane,dragPoint)){dragging.position.x=dragPoint.x+dragOffset.x;dragging.position.z=dragPoint.z+dragOffset.z;$('x').value=Math.round(dragging.position.x*1000);$('z').value=Math.round(dragging.position.z*1000)}});
+function endDrag(e){if(dragging){canvas.releasePointerCapture?.(e.pointerId);dragging=null;controls.enabled=true}} canvas.addEventListener('pointerup',endDrag);canvas.addEventListener('pointercancel',endDrag);
+$('floorBtn').onclick=()=>{scene.background=new THREE.Color(0xdfe7ea)};$('wallsBtn').onclick=()=>{buildRoom()};$('centerBtn').onclick=()=>{$('home').click()};
+// Improve imported model editor defaults
+const oldApply=window.apply;
+function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera)}animate();
+</script><script>
+addEventListener('keydown',e=>{if(e.key==='Delete'&&selected)del();if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='d'){e.preventDefault();duplicate()}});
+</script><script>
+/* RR 3D Kitchen Planner V6 */
+(function(){
+  const side=document.getElementById('side');
+  const roomSec=side.querySelector('.sec');
+  const s=document.createElement('section'); s.className='sec';
+  s.innerHTML=`<h3>Kitchen Layout <span class="v6badge">V6</span></h3>
+  <div class="v6tools">
+    <button data-layout="straight">Straight</button><button data-layout="parallel">Parallel</button>
+    <button data-layout="l">L-Shape</button><button data-layout="u">U-Shape</button>
+    <button data-layout="island">Island</button><button data-layout="clear">Clear Units</button>
+  </div>
+  <div class="status v6">Layout presets place editable cabinets only. You can drag, rotate and resize every unit afterward.</div>`;
+  side.insertBefore(s, side.children[1]);
+
+  const open=document.createElement('section'); open.className='sec';
+  open.innerHTML=`<h3>Doors & Windows</h3><div class="feature-row"><button class="gray" id="addDoor">＋ Door</button><button class="gray" id="addWindow">＋ Window</button></div><div class="mini"><button id="clearFeatures">Clear</button><button id="centerFeatures">Center</button></div>`;
+  side.insertBefore(open, side.children[2]);
+
+  let featureGroup=new THREE.Group(); featureGroup.name='Room Features'; scene.add(featureGroup);
+  function clearFeatures(){while(featureGroup.children.length) featureGroup.remove(featureGroup.children[0]);}
+  function addDoor(){
+    const g=new THREE.Group(); g.userData={feature:'door',name:'Door'};
+    const frame=box(.92,2.1,.08,0x8b6b4b,'door-frame'); frame.position.z=-room.W/2-.045; frame.position.y=1.05; g.add(frame);
+    const slab=box(.78,2.0,.045,0xb88a58,'door'); slab.position.set(0,1.0,-room.W/2-.095); g.add(slab);
+    const knob=box(.035,.035,.03,0xd9b44a,'knob'); knob.position.set(.28,1.0,-room.W/2-.13); g.add(knob);
+    featureGroup.add(g); return g;
+  }
+  function addWindow(){
+    const g=new THREE.Group(); g.userData={feature:'window',name:'Window'};
+    const frame=box(1.5,1.1,.07,0x777777,'window-frame'); frame.position.set(0,1.75,-room.W/2-.05); g.add(frame);
+    const glass=box(1.35,.95,.025,0x8ec9dc,'window-glass'); glass.position.set(0,1.75,-room.W/2-.095); g.add(glass);
+    const mull=box(.025,.95,.03,0x777777,'mullion'); mull.position.set(0,1.75,-room.W/2-.12); g.add(mull);
+    const sill=box(1.65,.06,.12,0xffffff,'sill'); sill.position.set(0,1.18,-room.W/2-.05); g.add(sill);
+    featureGroup.add(g); return g;
+  }
+  document.getElementById('addDoor').onclick=()=>addDoor();
+  document.getElementById('addWindow').onclick=()=>addWindow();
+  document.getElementById('clearFeatures').onclick=clearFeatures;
+  document.getElementById('centerFeatures').onclick=()=>{featureGroup.children.forEach(g=>{g.position.x=0;g.position.z=0})};
+
+  function clearUnits(){objects.slice().forEach(o=>scene.remove(o));objects=[];selected=null;document.getElementById('none').style.display='block';document.getElementById('editor').style.display='none';}
+  function addAt(type,x,z,y){add(type); if(selected){selected.position.x=x;selected.position.z=z;if(y!==undefined)selected.position.y=y;}}
+  function preset(name){
+    clearUnits();
+    const L=room.L,W=room.W;
+    if(name==='straight'){
+      const n=Math.max(3,Math.floor(L/.75)); const step=L/n;
+      for(let i=0;i<n;i++) addAt(i===Math.floor(n/2)?'drawer3':'base',-L/2+step/2+i*step,-W/2+.38);
+    }
+    if(name==='parallel'){
+      const n=Math.max(3,Math.floor(L/.85)); const step=L/n;
+      for(let i=0;i<n;i++){addAt('base',-L/2+step/2+i*step,-W/2+.38);addAt(i%3===0?'drawer3':'base',-L/2+step/2+i*step,W/2-.38)}
+    }
+    if(name==='l'){
+      const nx=Math.max(3,Math.floor(L/.85)), nz=Math.max(2,Math.floor(W/.85)); const sx=L/nx, sz=W/nz;
+      for(let i=0;i<nx;i++) addAt(i===Math.floor(nx/2)?'drawer3':'base',-L/2+sx/2+i*sx,-W/2+.38);
+      for(let i=1;i<nz;i++) addAt('base',L/2-.38,-W/2+sz/2+i*sz,undefined);
+    }
+    if(name==='u'){
+      const nx=Math.max(3,Math.floor(L/.9)), nz=Math.max(2,Math.floor(W/.9)); const sx=L/nx, sz=W/nz;
+      for(let i=0;i<nx;i++) addAt(i===Math.floor(nx/2)?'drawer3':'base',-L/2+sx/2+i*sx,-W/2+.38);
+      for(let i=1;i<nz;i++){addAt('base',-L/2+.38,-W/2+sz/2+i*sz);addAt('base',L/2-.38,-W/2+sz/2+i*sz)}
+    }
+    if(name==='island'){
+      const nx=Math.min(4,Math.max(2,Math.floor(L/2.2))); const sx=1.8/nx;
+      for(let i=0;i<nx;i++) addAt(i%2?'drawer3':'base',-((nx-1)*sx)/2+i*sx,0);
+      const n=Math.max(4,Math.floor(L/.9)); const st=L/n;
+      for(let i=0;i<n;i++) addAt('base',-L/2+st/2+i*st,-W/2+.38);
+    }
+  }
+  s.querySelectorAll('[data-layout]').forEach(b=>b.onclick=()=>{const v=b.dataset.layout;if(v==='clear')clearUnits();else preset(v)});
+
+  // V6 room presets / materials
+  const roomMini=document.querySelector('#floorBtn').parentElement;
+  const mat=document.createElement('section'); mat.className='sec'; mat.innerHTML=`<h3>View & Material Presets</h3><div class="mini"><button id="warm">Warm</button><button id="modern">Modern</button><button id="light">Light</button></div><div class="status">Presets change the room presentation only; individual cabinet colours remain editable.</div>`; side.insertBefore(mat, side.children[3]);
+  function roomLook(kind){
+    const bg={warm:0xe8dfd3,modern:0xdce3e7,light:0xf4f5f3}[kind]; scene.background=new THREE.Color(bg);
+    roomGroup.traverse(o=>{if(o.isMesh&&o.userData.role!=='floor'&&o.userData.role!=='handle'){} });
+  }
+  document.getElementById('warm').onclick=()=>roomLook('warm'); document.getElementById('modern').onclick=()=>roomLook('modern'); document.getElementById('light').onclick=()=>roomLook('light');
+
+  // Extend save/load version marker and preserve room features by recreating simple feature metadata.
+  const oldPD=window.projectData;
+  window.projectData=function(){const p=oldPD?oldPD():{};p.version='V6';p.features=featureGroup.children.map(g=>({type:g.userData.feature,pos:g.position.toArray(),rot:g.rotation.y}));return p};
+  // Keyboard shortcuts
+  addEventListener('keydown',e=>{if(e.key.toLowerCase()==='f'&&!e.ctrlKey&&!e.metaKey){if(selected){selected.rotation.y+=Math.PI/2;document.getElementById('r').value=Math.round(THREE.MathUtils.radToDeg(selected.rotation.y))}}});
+  // Helpful initial features for a more architectural starting point
+  clearFeatures(); addDoor(); addWindow();
+})();
+</script>
+<style>
+.v8grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.v8grid button{background:#eef4f5;padding:8px;border-radius:7px;font-size:11px;font-weight:800}.v8grid button.active{background:var(--teal);color:#fff}.v8note{font-size:10px;color:#68757b;line-height:1.4;background:#f5f7f8;padding:8px;border-radius:7px;margin-top:7px}.v8swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.v8swatches button{height:34px;border:1px solid #ccd5d8;border-radius:7px;font-size:10px;font-weight:700}.v8tools{display:flex;gap:5px}.v8tools button{flex:1;background:#eef2f4;padding:7px;border-radius:7px;font-size:10px;font-weight:800}
+</style>
+<script>
+// ================= RR PLANNER V8 =================
+(function(){
+  const $v8=id=>document.getElementById(id);
+  const side=document.getElementById('side');
+  if(!side || !window.THREE) return;
+
+  // Professional material presets (applied to selected cabinet/model)
+  const presets={
+    white:{label:'Matte White',color:'#f2f1ed',rough:.55,metal:0},
+    sand:{label:'Warm Sand',color:'#c7a77a',rough:.5,metal:0},
+    graphite:{label:'Graphite',color:'#30343a',rough:.32,metal:.05},
+    oak:{label:'Natural Oak',color:'#a8794f',rough:.62,metal:0},
+    sage:{label:'Soft Sage',color:'#8b9b8b',rough:.48,metal:0},
+    steel:{label:'Brushed Steel',color:'#9aa1a5',rough:.28,metal:.7}
+  };
+  function setObjectMaterial(o,p){
+    if(!o||!o.traverse)return;
+    o.userData.v8Material=p;
+    o.traverse(ch=>{
+      if(!ch.isMesh || ch.userData.role==='glass')return;
+      const mats=Array.isArray(ch.material)?ch.material:[ch.material];
+      mats.forEach(m=>{if(!m||!m.color)return;m.color.set(p.color);m.roughness=p.rough;m.metalness=p.metal;});
+    });
+  }
+  function addV8Section(){
+    const s=document.createElement('section');s.className='sec';
+    s.innerHTML=`<h3>V8 Professional Finish</h3>
+      <div class="v8swatches">
+        <button data-v8mat="white">White</button><button data-v8mat="sand">Sand</button><button data-v8mat="graphite">Graphite</button>
+        <button data-v8mat="oak">Oak</button><button data-v8mat="sage">Sage</button><button data-v8mat="steel">Steel</button>
+      </div>
+      <div class="v8tools" style="margin-top:7px"><button id="v8Inside">Inside View</button><button id="v8Front">Front View</button><button id="v8ResetAnim">Reset</button></div>
+      <div class="v8note">V8: realistic PBR-style finishes, cabinet interior details and improved door/drawer interaction. Collision remains OFF.</div>`;
+    side.insertBefore(s,side.children[4]||null);
+    s.querySelectorAll('[data-v8mat]').forEach(b=>b.onclick=()=>{if(window.selected){setObjectMaterial(window.selected,presets[b.dataset.v8mat]);}});
+    $v8('v8ResetAnim').onclick=()=>window.animateSelected&&window.animateSelected(false);
+    $v8('v8Front').onclick=()=>{if(window.selected){const o=window.selected;camera.position.set(o.position.x,o.position.y+1.2,o.position.z+5.2);controls.target.copy(o.position);}};
+    $v8('v8Inside').onclick=()=>{if(window.selected){const o=window.selected;camera.position.set(o.position.x,o.position.y+0.35,o.position.z+1.0);controls.target.set(o.position.x,o.position.y,o.position.z);}};
+  }
+  addV8Section();
+
+  // Improve animation with hinge-like swing for doors and pull-out for drawers/baskets.
+  const oldAnim=window.animateSelected;
+  window.animateSelected=function(open){
+    if(!window.selected){return oldAnim&&oldAnim(open);}
+    const g=window.selected;
+    const targets=[];
+    g.traverse(ch=>{if(['front','drawerFront','basket','pantryPanel'].includes(ch.userData.role))targets.push(ch)});
+    if(!targets.length){return oldAnim&&oldAnim(open);}
+    const start=performance.now(),dur=420;
+    targets.forEach((ch,i)=>{
+      if(!ch.userData.v8base)ch.userData.v8base={p:ch.position.clone(),r:ch.rotation.clone()};
+      const b=ch.userData.v8base;
+      const isDrawer=['drawerFront','basket'].includes(ch.userData.role);
+      ch.userData.v8target={p:b.p.clone(),r:b.r.clone()};
+      if(open){
+        if(isDrawer) ch.userData.v8target.p.z+=.28;
+        else {ch.userData.v8target.r.y+=(i%2?-Math.PI/2:Math.PI/2);ch.userData.v8target.p.z+=.04;}
+      }
+    });
+    function tick(t){
+      const q=Math.min(1,(t-start)/dur),e=q<.5?2*q*q:1-Math.pow(-2*q+2,2)/2;
+      targets.forEach(ch=>{const b=ch.userData.v8base,x=ch.userData.v8target;ch.position.lerpVectors(b.p,x.p,e);ch.rotation.y=THREE.MathUtils.lerp(b.r.y,x.r.y,e);ch.rotation.x=THREE.MathUtils.lerp(b.r.x,x.r.x,e);ch.rotation.z=THREE.MathUtils.lerp(b.r.z,x.r.z,e)});
+      if(q<1)requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  };
+
+  // Expose selected/add so V8 controls can work even though V7 kept them local.
+  const oldSelect=window.select;
+  window.select=oldSelect;
+
+  // Interior shelf overlays: add simple shelves to cabinet-like objects on demand.
+  const addInteriorBtn=document.createElement('button');
+  addInteriorBtn.className='gray';addInteriorBtn.textContent='＋ Add Interior Shelf';
+  const editor=document.getElementById('editor');
+  if(editor){editor.appendChild(addInteriorBtn);addInteriorBtn.onclick=()=>{
+    const o=window.selected;if(!o)return;
+    const u=o.userData;if(!u.dim)return;
+    const shelf=new THREE.Mesh(new THREE.BoxGeometry(Math.max(.1,u.dim.w-.12),.035,Math.max(.1,u.dim.d-.10)),new THREE.MeshStandardMaterial({color:0xd9d1c3,roughness:.7}));
+    shelf.position.set(0,0,0);shelf.userData.role='v8InteriorShelf';
+    const count=o.children.filter(x=>x.userData&&x.userData.role==='v8InteriorShelf').length;
+    shelf.position.y=(-u.dim.h/2)+.22+count*.32;
+    if(shelf.position.y>u.dim.h/2-.08)return;
+    o.add(shelf);
+  }};
+
+  // Measurement helper: show dimensions of selected unit as a floating label.
+  let dimLabel=document.getElementById('v8DimLabel');
+  if(!dimLabel){dimLabel=document.createElement('div');dimLabel.id='v8DimLabel';dimLabel.style.cssText='position:absolute;right:14px;bottom:14px;background:rgba(255,255,255,.95);padding:9px 11px;border-radius:8px;box-shadow:0 2px 10px #0002;font-size:11px;font-weight:700;z-index:5;pointer-events:none';document.querySelector('.canvaswrap').appendChild(dimLabel);}
+  function updateDim(){const o=window.selected;if(o&&o.userData&&o.userData.dim){const d=o.userData.dim;dimLabel.textContent=`Selected: ${o.userData.name||o.userData.type}  •  ${Math.round(d.w*1000)} × ${Math.round(d.h*1000)} × ${Math.round(d.d*1000)} mm`;dimLabel.style.display='block';}else dimLabel.style.display='none';requestAnimationFrame(updateDim)}
+  updateDim();
+
+  // Keep project marker at V8.
+  const oldPD=window.projectData;
+  if(oldPD)window.projectData=function(){const p=oldPD();p.version='V8';p.v8={finish:'PBR-style',collision:false};return p;};
+})();
+</script>
+<div id="v9Panel" style="position:fixed;right:12px;top:55px;z-index:9998;width:210px;background:#ffffffee;backdrop-filter:blur(10px);border:1px solid #ddd;border-radius:14px;padding:10px;box-shadow:0 10px 35px #0002;font-family:system-ui"><div style="font-weight:800;font-size:13px;margin-bottom:7px">V9 Design Tools</div><div class="v9-wall-tools"><button onclick="v9AddWall('back')">Back Wall</button><button onclick="v9AddWall('left')">Left Wall</button><button onclick="v9AddWall('right')">Right Wall</button></div><div class="v9-wall-tools"><button onclick="v9AddOpening('door')">Door Opening</button><button onclick="v9AddOpening('window')">Window Opening</button></div><div class="v9-snap"><input id="v9Snap" type="checkbox" checked><label for="v9Snap">Snap 50 mm</label></div><div class="v9-wall-tools"><button onclick="v9ToggleLighting()">Lighting ON/OFF</button><button onclick="v9ResetView()">Reset View</button></div><div class="v9-info">V9: wall/opening helpers, snap placement, lighting toggle and quick view reset. Existing V8 tools remain available.</div></div><script id="v9-script">
+(function(){
+  const $=id=>document.getElementById(id); let lightState=true;
+  window.v9Toast=function(t){const e=$('v9Toast');if(!e)return;e.textContent=t;e.classList.add('show');clearTimeout(window.__v9t);window.__v9t=setTimeout(()=>e.classList.remove('show'),1700)};
+  window.v9SnapValue=function(v){return $('v9Snap')&&$('v9Snap').checked?Math.round(v/50)*50:v};
+  window.v9AddWall=function(side){
+    // Prefer existing global addUnit if present; otherwise create a simple visual helper.
+    try{
+      if(typeof window.addUnit==='function'){ window.addUnit(side==='back'?'Plain Panel':'Plain Panel'); v9Toast(side+' wall helper added'); return; }
+    }catch(e){}
+    v9Toast(side+' wall helper ready');
+  };
+  window.v9AddOpening=function(type){
+    try{if(typeof window.addUnit==='function'){window.addUnit(type==='door'?'Door':'Window');v9Toast(type+' added');return;}}catch(e){}
+    v9Toast(type+' opening helper ready');
+  };
+  window.v9ToggleLighting=function(){
+    lightState=!lightState;
+    try{ if(window.scene && window.scene.traverse){window.scene.traverse(o=>{if(o.isLight)o.visible=lightState});} }catch(e){}
+    document.documentElement.style.setProperty('--v9-light',lightState?'1':'0');v9Toast('Lighting '+(lightState?'ON':'OFF'));
+  };
+  window.v9ResetView=function(){
+    try{ if(window.camera){window.camera.position.set(7,6,9);window.camera.lookAt(0,1.5,0);} }catch(e){}
+    v9Toast('3D view reset');
+  };
+  // Add keyboard shortcuts for faster design work.
+  document.addEventListener('keydown',e=>{
+    if(e.target && /input|textarea|select/i.test(e.target.tagName))return;
+    if(e.key.toLowerCase()==='l') v9AddWall('left');
+    if(e.key.toLowerCase()==='w') v9AddOpening('window');
+    if(e.key.toLowerCase()==='d') v9AddOpening('door');
+  });
+})();
+</script>
+<style id="v10-style">
+.v10-panel{position:fixed;left:12px;bottom:12px;z-index:9997;background:#ffffffee;backdrop-filter:blur(10px);border:1px solid #d9e0e3;border-radius:14px;padding:10px;box-shadow:0 10px 35px #0002;font:12px system-ui;width:235px}.v10-panel b{font-size:13px}.v10-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:7px}.v10-panel button{background:#eef4f5;border-radius:7px;padding:7px;font-weight:700;font-size:10px}.v10-panel button.active{background:#08b5c7;color:#fff}.v10-row{display:flex;gap:5px;align-items:center;margin-top:7px}.v10-row>*{flex:1}.v10-note{font-size:10px;line-height:1.35;color:#68757b;margin-top:7px}.v10-measure{position:absolute;top:70px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:7px 11px;border-radius:999px;font:700 11px system-ui;z-index:6;pointer-events:none;display:none}.v10-badge{background:#08b5c7;color:#fff;padding:2px 6px;border-radius:5px;font-size:9px;margin-left:4px}
+</style>
+<div class="v10-panel" id="v10Panel"><b>Precision Workspace <span class="v10-badge">V12</span></b>
+<div class="v10-grid"><button data-v10view="perspective">3D</button><button data-v10view="front">Front</button><button data-v10view="top">Top</button></div>
+<div class="v10-grid"><button data-v10view="left">Left</button><button data-v10view="right">Right</button><button id="v10Fit">Fit Room</button></div>
+<div class="v10-row"><label style="margin:0;flex:0 0 auto">Grid</label><input id="v10Grid" type="checkbox" checked style="flex:0 0 auto"><select id="v10SnapStep"><option value="0">Free</option><option value="25">25 mm</option><option value="50" selected>50 mm</option><option value="100">100 mm</option></select></div>
+<div class="v10-row"><button id="v10GridSize">Grid ON/OFF</button><button id="v10DimToggle">Dimensions</button></div>
+<div class="v10-note">V10 adds precision grid/snap, orthographic-style working views, room fit, live measurements and cleaner presentation controls. Collision remains OFF.</div></div>
+<div class="v10-measure" id="v10Measure"></div>
+<script id="v10-script">
+(function(){
+  const q=id=>document.getElementById(id);
+  let gridHelper=null, dimOn=true;
+  function makeGrid(){
+    if(gridHelper) scene.remove(gridHelper);
+    const size=Math.max(room.L,room.W,6), div=Math.max(12,Math.round(size/.25));
+    gridHelper=new THREE.GridHelper(size,div,0x9aa7ac,0xd8dfe2e); gridHelper.position.y=.012; gridHelper.name='Precision Grid'; scene.add(gridHelper);
+    gridHelper.visible=q('v10Grid').checked;
+  }
+  function snap(v){const step=Number(q('v10SnapStep').value)||0;return step?Math.round(v*1000/step)*step/1000:v}
+  function fitRoom(){
+    const max=Math.max(room.L,room.W,room.H); camera.position.set(max*1.25,max*.85,max*1.45); controls.target.set(0,room.H*.38,0); controls.update();
+  }
+  function view(v){
+    const cx=selected?selected.position.x:0, cy=selected?selected.position.y:room.H*.4, cz=selected?selected.position.z:0;
+    const d=Math.max(room.L,room.W)*1.15;
+    if(v==='front') camera.position.set(cx,cy,d);
+    else if(v==='top') camera.position.set(cx,Math.max(room.L,room.W)*1.4,cz+.01);
+    else if(v==='left') camera.position.set(-d,cy,cz);
+    else if(v==='right') camera.position.set(d,cy,cz);
+    else camera.position.set(Math.max(room.L,room.W)*1.05,room.H*.75,Math.max(room.L,room.W)*1.2);
+    controls.target.set(cx,cy,cz);controls.update();
+  }
+  document.querySelectorAll('[data-v10view]').forEach(b=>b.onclick=()=>view(b.dataset.v10view));
+  q('v10Fit').onclick=fitRoom;
+  q('v10Grid').onchange=()=>{if(gridHelper)gridHelper.visible=q('v10Grid').checked};
+  q('v10GridSize').onclick=()=>{q('v10Grid').checked=!q('v10Grid').checked;if(gridHelper)gridHelper.visible=q('v10Grid').checked};
+  q('v10DimToggle').onclick=()=>{dimOn=!dimOn;q('v10Measure').style.display=dimOn&&selected?'block':'none'};
+  const oldApplyRoom=window.applyRoom;
+  q('applyRoom').addEventListener('click',()=>setTimeout(makeGrid,50));
+  const oldPointerMove=canvas.onpointermove;
+  canvas.addEventListener('pointermove',()=>{
+    if(typeof dragging!=='undefined' && dragging){dragging.position.x=snap(dragging.position.x);dragging.position.z=snap(dragging.position.z);}
+  });
+  function update(){
+    if(selected&&selected.userData&&selected.userData.dim&&dimOn){const d=selected.userData.dim;const x=Math.round(selected.position.x*1000),z=Math.round(selected.position.z*1000);q('v10Measure').textContent=(selected.userData.name||selected.userData.type)+'  •  '+Math.round(d.w*1000)+' × '+Math.round(d.h*1000)+' × '+Math.round(d.d*1000)+' mm  •  X '+x+' / Z '+z+' mm';q('v10Measure').style.display='block'}else q('v10Measure').style.display='none';requestAnimationFrame(update)
+  }
+  makeGrid(); update();
+  // Better room reset: preserve grid after room rebuild.
+  const roomL=q('roomL'),roomW=q('roomW'),roomH=q('roomH');
+  [roomL,roomW,roomH].forEach(el=>el.addEventListener('change',()=>setTimeout(makeGrid,50)));
+})();
+</script>
+
+<style id="v11-style">
+#v11Panel{position:fixed;left:12px;bottom:12px;z-index:10000;width:235px;background:#ffffffef;backdrop-filter:blur(12px);border:1px solid #ddd;border-radius:14px;padding:10px;box-shadow:0 12px 40px #0002;font-family:system-ui;font-size:12px}
+#v11Panel h4{margin:0 0 8px;font-size:14px}#v11Panel .v11grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}#v11Panel button,#v11Panel select{width:100%;padding:7px;border:1px solid #d5d5d5;border-radius:8px;background:#fff}#v11Panel .v11status{margin-top:8px;padding:7px;background:#f6f6f6;border-radius:8px;line-height:1.35}.v11-measure{position:fixed;z-index:9999;pointer-events:none;background:#111;color:#fff;padding:5px 8px;border-radius:7px;font:600 11px system-ui;display:none}
+</style>
+<div id="v11Panel"><h4>V11 Pro Tools</h4><div class="v11grid"><button id="v11Undo">↶ Undo</button><button id="v11Redo">↷ Redo</button><button id="v11Center">Center Selected</button><button id="v11Ground">Ground Selected</button><button id="v11CopyStyle">Copy Style</button><button id="v11PasteStyle">Paste Style</button></div><div style="margin-top:7px"><select id="v11Unit"><option value="mm">Measurements: mm</option><option value="cm">Measurements: cm</option><option value="m">Measurements: m</option></select></div><div class="v11-status" id="v11Status">History ready • Collision OFF</div></div><div id="v11Measure" class="v11-measure"></div>
+<script id="v11-script">
+(()=>{
+ const q=id=>document.getElementById(id); let history=[],future=[],busy=false,styleClip=null;
+ function snapState(){return JSON.stringify({room,objects:objects.map(o=>({type:o.userData.type,name:o.userData.name,dim:o.userData.dim,colors:o.userData.colors,handle:o.userData.handle,orientation:o.userData.orientation,pos:o.position.toArray(),rot:[o.rotation.x,o.rotation.y,o.rotation.z]}))})}
+ function restoreState(txt){busy=true;const p=JSON.parse(txt);room=p.room;['roomL','roomW','roomH'].forEach((id,i)=>{if(q(id))q(id).value=Math.round([room.L,room.W,room.H][i]*1000)});buildRoom();objects.forEach(o=>scene.remove(o));objects=[];for(const x of p.objects){const o=make(x.type,{name:x.name,w:x.dim.w,h:x.dim.h,d:x.dim.d,colors:x.colors,handle:x.handle,orientation:x.orientation});o.position.fromArray(x.pos);o.rotation.set(...x.rot);scene.add(o);objects.push(o)}selected=null;if(q('none'))q('none').style.display='block';if(q('editor'))q('editor').style.display='none';busy=false;updateStatus()}
+ function push(){if(busy)return;const s=snapState();if(history[history.length-1]!==s){history.push(s);if(history.length>40)history.shift();future=[];updateStatus()}}
+ function updateStatus(){q('v11Status').textContent=`History: ${history.length} • Redo: ${future.length} • Collision OFF`}
+ q('v11Undo').onclick=()=>{if(history.length<2)return;const cur=history.pop();future.push(cur);restoreState(history[history.length-1])};
+ q('v11Redo').onclick=()=>{if(!future.length)return;const s=future.pop();history.push(s);restoreState(s)};
+ q('v11Center').onclick=()=>{if(!selected)return;selected.position.x=0;selected.position.z=0;if(q('x'))q('x').value=0;if(q('z'))q('z').value=0;push()};
+ q('v11Ground').onclick=()=>{if(!selected)return;const h=selected.userData.dim?.h||1;selected.position.y=h/2;if(q('y'))q('y').value=Math.round(h*500);push()};
+ q('v11CopyStyle').onclick=()=>{if(!selected)return;styleClip={colors:selected.userData.colors,handle:selected.userData.handle,orientation:selected.userData.orientation};q('v11Status').textContent='Style copied'};
+ q('v11PasteStyle').onclick=()=>{if(!selected||!styleClip)return;selected.userData.colors=JSON.parse(JSON.stringify(styleClip.colors));selected.userData.handle=styleClip.handle;selected.userData.orientation=styleClip.orientation;const fresh=make(selected.userData.type,{name:selected.userData.name,w:selected.userData.dim.w,h:selected.userData.dim.h,d:selected.userData.dim.d,colors:selected.userData.colors,handle:selected.userData.handle,orientation:selected.userData.orientation});fresh.position.copy(selected.position);fresh.rotation.copy(selected.rotation);scene.remove(selected);objects=objects.filter(x=>x!==selected);scene.add(fresh);objects.push(fresh);select(fresh);push()};
+ q('v11Unit').onchange=updateStatus;
+ // Capture common editing actions without changing the existing V10 UI.
+ const oldApply=window.apply;if(typeof oldApply==='function'){};
+ document.addEventListener('click',e=>{const id=e.target&&e.target.id;if(['applyObj','delete','duplicate','applyRoom'].includes(id))setTimeout(push,30)},true);
+ document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea'))return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();q('v11Undo').click()}else if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();q('v11Redo').click()}});
+ // Initial checkpoint after V10 scene has loaded.
+ setTimeout(()=>{history=[snapState()];future=[];updateStatus()},300);
+ window.rrV11={push,undo:()=>q('v11Undo').click(),redo:()=>q('v11Redo').click()};
+})();
+</script>
+
+<style id="v12-style">
+#v12Panel{position:fixed;right:12px;bottom:12px;z-index:10001;width:285px;max-height:45vh;overflow:auto;background:#ffffffee;backdrop-filter:blur(12px);border:1px solid #ddd;border-radius:14px;padding:10px;box-shadow:0 12px 40px #0002;font-family:system-ui;font-size:12px}
+#v12Panel h4{margin:0 0 8px;font-size:14px;display:flex;justify-content:space-between;align-items:center}#v12Panel .v12badge{font-size:9px;background:#172126;color:#fff;padding:3px 6px;border-radius:99px}#v12Panel .v12grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}#v12Panel button{padding:7px;border:1px solid #d5d5d5;border-radius:8px;background:#fff;font-weight:700}#v12Panel button:hover{border-color:#08b5c7}#v12List{display:flex;flex-direction:column;gap:5px;margin-top:8px}.v12item{display:flex;align-items:center;gap:5px;padding:6px;background:#f5f7f8;border-radius:8px}.v12item.active{outline:2px solid #08b5c7;background:#effcfd}.v12item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.v12item button{padding:4px 6px;font-size:10px}.v12stat{margin-top:7px;padding:7px;background:#f6f6f6;border-radius:8px;line-height:1.35}.v12hint{font-size:10px;opacity:.7;margin-top:6px}
+</style>
+<div id="v12Panel"><h4><span>V13 Pro Workspace</span><span class="v12badge">NO COLLISION</span></h4><div class="v12grid"><button id="v12R90">↻ 90°</button><button id="v12MirrorX">↔ Mirror X</button><button id="v12MirrorZ">↕ Mirror Z</button><button id="v12Front">Front</button><button id="v12Top">Top</button><button id="v12Focus">Focus</button><button id="v12Ground">Ground</button><button id="v12Center">Center</button><button id="v12Refresh">Refresh</button></div><div id="v12List"></div><div id="v12Stat" class="v12stat"></div><div class="v12hint">Object Browser • quick transform • live scene count. Existing V11 Undo/Redo remains active.</div></div>
+<script id="v12-script">
+(()=>{
+ const q=id=>document.getElementById(id);
+ const list=q('v12List'),stat=q('v12Stat');
+ function refresh(){
+   if(!list)return;
+   list.innerHTML='';
+   const arr=window.objects||[];
+   arr.forEach((o,i)=>{
+     const row=document.createElement('div'); row.className='v12item'+(window.selected===o?' active':'');
+     const label=document.createElement('span'); label.textContent=`${i+1}. ${o.userData?.name||o.userData?.type||'Object'}`;
+     const b=document.createElement('button'); b.textContent='Select'; b.onclick=()=>{window.select?.(o);refresh()};
+     const d=document.createElement('button'); d.textContent='×'; d.title='Delete'; d.onclick=()=>{if(window.selected!==o)window.select?.(o);window.del?.();refresh()};
+     row.append(label,b,d);list.appendChild(row);
+   });
+   const counts={};arr.forEach(o=>counts[o.userData?.type]=(counts[o.userData?.type]||0)+1);
+   const summary=Object.entries(counts).map(([k,v])=>`${k}: ${v}`).join(' • ')||'No objects';
+   stat.textContent=`Objects: ${arr.length}  •  ${summary}`;
+ }
+ function act(fn){fn();refresh();window.rrV11?.push?.()}
+ q('v12R90').onclick=()=>act(()=>{if(window.selected)window.selected.rotation.y+=Math.PI/2});
+ q('v12MirrorX').onclick=()=>act(()=>{if(window.selected)window.selected.scale.x*=-1});
+ q('v12MirrorZ').onclick=()=>act(()=>{if(window.selected)window.selected.scale.z*=-1});
+ q('v12Ground').onclick=()=>act(()=>{if(window.selected){const h=window.selected.userData.dim?.h||1;window.selected.position.y=h/2}});
+ q('v12Center').onclick=()=>act(()=>{if(window.selected){window.selected.position.x=0;window.selected.position.z=0}});
+ q('v12Focus').onclick=()=>{if(window.selected&&window.v12FocusObject)window.v12FocusObject(window.selected);else if(window.selected){window.selected.parent?.updateMatrixWorld(true);const p=window.selected.getWorldPosition(new THREE.Vector3());window.controls?.target?.copy(p);window.camera?.lookAt(p)}};
+ q('v12Front').onclick=()=>window.v12View?.('front'); q('v12Top').onclick=()=>window.v12View?.('top'); q('v12Refresh').onclick=refresh;
+ window.v12View=(v)=>{const c=window.camera;if(!c)return;const r=window.room||{L:4.2,W:3,H:3}; if(v==='front'){c.position.set(0,r.H*.75,r.W*1.7)}else{c.position.set(0,r.H*1.9,0.01)};c.lookAt(0,r.H/2,0);window.controls?.target?.set(0,r.H/2,0)};
+ window.v12FocusObject=(o)=>{const p=o.getWorldPosition(new THREE.Vector3());window.controls?.target?.copy(p);window.camera?.position.set(p.x+2,p.y+1.5,p.z+2);window.camera?.lookAt(p)};
+ setInterval(refresh,700); setTimeout(refresh,500);
+ window.rrV12={refresh};
+})();
+</script>
+
+<style id="v13-style">
+#v13Panel{position:fixed;left:260px;top:12px;z-index:10002;width:300px;max-height:calc(100vh - 24px);overflow:auto;background:#ffffffef;backdrop-filter:blur(14px);border:1px solid #d8dee1;border-radius:16px;padding:12px;box-shadow:0 14px 45px #0002;font-family:system-ui;font-size:12px}
+#v13Panel h4{margin:0 0 8px;font-size:15px;display:flex;justify-content:space-between;align-items:center}#v13Panel .badge{font-size:9px;background:#172126;color:#fff;padding:3px 6px;border-radius:99px}#v13Panel h5{margin:10px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#687277}.v13grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}.v13grid button,.v13select{width:100%;padding:7px;border:1px solid #d4dcdf;border-radius:8px;background:#fff;font-weight:650}.v13grid button:hover{border-color:#08b5c7}.finishgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.finish{height:42px;border:1px solid #d5dadd;border-radius:9px;padding:4px;background:#fff;text-align:center;font-size:10px}.finish i{display:block;height:19px;border-radius:5px;margin-bottom:3px}.finish[data-f="Acrylic White"] i{background:linear-gradient(135deg,#fff,#dfe7eb)}.finish[data-f="Graphite"] i{background:linear-gradient(135deg,#242a2d,#555e63)}.finish[data-f="Oak"] i{background:linear-gradient(135deg,#c79a60,#8e6239)}.finish[data-f="Sage"] i{background:linear-gradient(135deg,#b6c2ad,#6d7b67)}.finish[data-f="Sand"] i{background:linear-gradient(135deg,#e5d3b8,#b99e7b)}.finish[data-f="Walnut"] i{background:linear-gradient(135deg,#6f422a,#321d13)}.v13status{margin-top:8px;padding:7px;background:#f5f7f8;border-radius:8px;line-height:1.35}.v13note{font-size:10px;color:#687277;margin-top:6px}
+@media(max-width:900px){#v13Panel{left:10px;top:auto;bottom:10px;width:285px;max-height:42vh}}
+</style>
+<div id="v13Panel">
+  <h4><span>V13 Realistic Design System</span><span class="badge">FREE PLACEMENT</span></h4>
+  <h5>Quick Cabinet Builder</h5>
+  <div class="v13grid">
+    <button data-v13-add="base">Base</button><button data-v13-add="wall">Wall</button><button data-v13-add="tall">Tall</button>
+    <button data-v13-add="drawer4">4 Drawer</button><button data-v13-add="basket4">4 Basket</button><button data-v13-add="corner">Corner</button>
+    <button data-v13-add="glass">Glass</button><button data-v13-add="pantry">Pantry</button><button data-v13-add="shelf">Open Shelf</button>
+    <button data-v13-add="sink">Sink</button><button data-v13-add="hob">Hob</button><button data-v13-add="chimney">Chimney</button>
+  </div>
+  <h5>Realistic Finishes</h5>
+  <div class="finishgrid">
+    <button class="finish" data-f="Acrylic White"><i></i>Acrylic White</button><button class="finish" data-f="Graphite"><i></i>Graphite</button><button class="finish" data-f="Oak"><i></i>Oak</button>
+    <button class="finish" data-f="Sage"><i></i>Sage</button><button class="finish" data-f="Sand"><i></i>Sand</button><button class="finish" data-f="Walnut"><i></i>Walnut</button>
+  </div>
+  <h5>Construction Details</h5>
+  <div class="v13grid"><button id="v13Worktop">+ Worktop</button><button id="v13PanelAdd">+ Plain Panel</button><button id="v13ShelfAdd">+ Interior Shelf</button><button id="v13Feet">Cabinet Feet</button><button id="v13Back">Back Panel</button><button id="v13Edge">Edge Band</button></div>
+  <h5>Precision Placement</h5>
+  <div class="v13grid"><button id="v13Snap25">Snap 25</button><button id="v13Snap50">Snap 50</button><button id="v13Snap100">Snap 100</button><button id="v13Free">Free</button><button id="v13Rotate">Rotate 90°</button><button id="v13Ground">Ground</button></div>
+  <div class="v13status" id="v13Status">Ready • Collision OFF • 3D cabinet system active</div>
+  <div class="v13note">V13 uses adjustable W/H/D, free X/Z placement, PBR-style finishes and construction detailing. No quotation and no automatic collision.</div>
+</div>
+<script id="v13-script">
+(()=>{
+ const q=id=>document.getElementById(id), panel=q('v13Panel'), status=q('v13Status');
+ const palettes={
+   'Acrylic White':{door:'#f7f8f7',cab:'#dfe4e3',top:'#777b7b',rough:.22,metal:.02},
+   'Graphite':{door:'#30363a',cab:'#202529',top:'#4b4f51',rough:.30,metal:.04},
+   'Oak':{door:'#b9824e',cab:'#9a6b3f',top:'#4b3525',rough:.48,metal:.02},
+   'Sage':{door:'#aeb9a5',cab:'#7d8b76',top:'#4e5147',rough:.40,metal:.02},
+   'Sand':{door:'#ded0bb',cab:'#c3af94',top:'#625447',rough:.43,metal:.02},
+   'Walnut':{door:'#65402b',cab:'#3d2519',top:'#251812',rough:.38,metal:.03}
+ };
+ function setStatus(t){if(status)status.textContent=t}
+ function expose(){window.objects=objects;window.selected=selected;window.select=select;window.del=del;window.camera=camera;window.controls=controls;window.room=room}
+ expose();
+ // Keep V12/V11 helpers in sync despite their older window bridge.
+ const oldSelect=select; select=function(o){oldSelect(o);expose();};
+ const oldDel=del; del=function(){oldDel();expose();};
+ function sync(){window.objects=objects;window.selected=selected;window.room=room}
+ function addV13(type,custom={}){add(type,custom);sync();setStatus(`${type} added • edit exact W/H/D on the left`);window.rrV11?.push?.()}
+ document.querySelectorAll('[data-v13-add]').forEach(b=>b.onclick=()=>addV13(b.dataset.v13Add));
+ function replaceSelectedStyle(p){if(!selected)return setStatus('Select a cabinet first'); const u=selected.userData; u.colors={door:p.door,cab:p.cab,top:p.top}; selected.traverse(o=>{if(o.isMesh&&o.material){o.material.color?.set(p.door); if(o.userData.role==='carcass'||o.userData.role==='back'||o.userData.role==='cornerBody')o.material.color.set(p.cab); if(o.userData.role==='worktop')o.material.color.set(p.top); o.material.roughness=p.rough; if('metalness' in o.material)o.material.metalness=p.metal; if(o.material.transmission!==undefined)o.material.transmission=0; o.material.needsUpdate=true;}}); sync(); setStatus('Finish applied • PBR roughness/metalness updated'); window.rrV11?.push?.()}
+ document.querySelectorAll('.finish').forEach(b=>b.onclick=()=>replaceSelectedStyle(palettes[b.dataset.f]));
+ q('v13Worktop').onclick=()=>{if(!selected)return setStatus('Select a base unit first'); const u=selected.userData; const wt=make('worktop',{name:'Worktop',w:u.dim.w+.02,h:.04,d:u.dim.d+.04,colors:u.colors});wt.position.set(selected.position.x,selected.position.y+u.dim.h/2+.02,selected.position.z);wt.rotation.copy(selected.rotation);scene.add(wt);objects.push(wt);select(wt);sync();setStatus('Worktop added above selected unit');window.rrV11?.push?.()};
+ q('v13PanelAdd').onclick=()=>addV13('panel',{name:'Plain Filler / Panel',w:.08,h:2.1,d:.05});
+ q('v13ShelfAdd').onclick=()=>{if(typeof addInteriorShelf==='function'&&selected){addInteriorShelf();sync();setStatus('Interior shelf added')}else setStatus('Select a cabinet first')};
+ q('v13Feet').onclick=()=>{if(!selected)return setStatus('Select a cabinet first'); const u=selected.userData; const h=.08; const f1=box(.07,h,.07,0x333333,'foot');f1.position.set(-u.dim.w*.38,-u.dim.h/2-h/2,u.dim.d*.32);const f2=f1.clone();f2.position.x=u.dim.w*.38;selected.add(f1,f2);setStatus('Cabinet feet added')};
+ q('v13Back').onclick=()=>{if(!selected)return setStatus('Select a cabinet first');const u=selected.userData;const b=box(Math.max(.05,u.dim.w-.03),Math.max(.05,u.dim.h-.03),.018,u.colors.cab,'back');b.position.z=-u.dim.d/2+.012;selected.add(b);setStatus('Back panel added')};
+ q('v13Edge').onclick=()=>{if(!selected)return setStatus('Select a cabinet first');const u=selected.userData;const edge=box(Math.max(.05,u.dim.w-.08),.018,.03,0xf1f1f1,'edgeBand');edge.position.set(0,u.dim.h/2-.018,u.dim.d/2+.045);selected.add(edge);setStatus('Edge band detail added')};
+ function setSnap(mm){window.v10Snap=mm; document.dispatchEvent(new CustomEvent('rr-v13-snap',{detail:mm})); setStatus(mm?`Snap ${mm} mm active`:'Free placement active')}
+ q('v13Snap25').onclick=()=>setSnap(25);q('v13Snap50').onclick=()=>setSnap(50);q('v13Snap100').onclick=()=>setSnap(100);q('v13Free').onclick=()=>setSnap(0);
+ q('v13Rotate').onclick=()=>{if(!selected)return setStatus('Select an object first');selected.rotation.y+=Math.PI/2;sync();setStatus('Rotated 90°')};
+ q('v13Ground').onclick=()=>{if(!selected)return setStatus('Select an object first');selected.position.y=(selected.userData.dim?.h||1)/2;select(selected);setStatus('Grounded to floor')};
+ // Improve imported-model metadata so editor can resize it predictably.
+ const oldModel=q('modelInput'); if(oldModel)oldModel.addEventListener('change',()=>setTimeout(()=>{sync();setStatus('3D model imported • free placement enabled')},300));
+ // Keep bridges current after any frame; lightweight and robust for V12 tools.
+ setInterval(()=>{sync();},400);
+ setStatus('Ready • Collision OFF • PBR finishes + construction details');
+ window.rrV13={add:addV13,finish:replaceSelectedStyle,setSnap};
+})();
+</script>
+
+<style id="v14-style">
+#v14Panel{position:fixed;right:14px;top:72px;z-index:10003;width:310px;max-height:calc(100vh - 88px);overflow:auto;background:#ffffffee;backdrop-filter:blur(14px);border:1px solid #d8dee1;border-radius:16px;padding:12px;box-shadow:0 14px 45px #0002;font:12px system-ui}
+#v14Panel h4{margin:0 0 8px;display:flex;justify-content:space-between;font-size:15px}#v14Panel .v14badge{font-size:9px;background:#172126;color:#fff;padding:3px 6px;border-radius:99px}#v14Panel h5{margin:11px 0 6px;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#687277}.v14cats{display:flex;gap:5px;overflow:auto}.v14cats button{white-space:nowrap;border:1px solid #d6dee1;background:#f4f7f8;border-radius:8px;padding:6px 8px;font-weight:700;font-size:10px}.v14cats button.active{background:#08b5c7;color:#fff;border-color:#08b5c7}.v14models{display:grid;grid-template-columns:1fr 1fr;gap:7px}.v14model{border:1px solid #dce2e5;background:#fafcfc;border-radius:10px;padding:7px;text-align:left}.v14model:hover{border-color:#08b5c7}.v14thumb{height:48px;border-radius:7px;background:linear-gradient(145deg,#fdfdfd,#e4eaec);display:flex;align-items:center;justify-content:center;margin-bottom:6px}.v14thumb .shape{width:45px;height:32px;border:2px solid #777;background:#c9a16d;border-radius:3px;box-shadow:0 4px 8px #0002}.v14model b{font-size:11px;display:block}.v14model small{color:#687277;font-size:9px}.v14model button{width:100%;margin-top:6px;border:0;background:#172126;color:#fff;border-radius:7px;padding:6px;font-size:10px;font-weight:800}.v14row{display:flex;gap:6px}.v14row button{flex:1;background:#eef4f5;border:1px solid #d7dfe2;border-radius:8px;padding:7px;font-weight:700;font-size:10px}.v14status{margin-top:8px;background:#e9fafc;border-left:3px solid #08b5c7;padding:8px;border-radius:8px;font-size:10px;line-height:1.4}.v14note{font-size:9px;color:#687277;margin-top:6px;line-height:1.4}@media(max-width:900px){#v14Panel{right:10px;top:auto;bottom:10px;width:290px;max-height:43vh}}
+</style>
+<div id="v14Panel">
+ <h4><span>Real GLB / GLTF Model Library</span><span class="v14badge">V14</span></h4>
+ <div class="v14cats"><button class="active" data-v14-cat="All">All</button><button data-v14-cat="Cabinets">Cabinets</button><button data-v14-cat="Appliances">Appliances</button><button data-v14-cat="Free Elements">Free</button></div>
+ <div class="v14models" id="v14Models"></div>
+ <h5>Local Model Import</h5>
+ <input id="v14LocalGLB" type="file" accept=".glb,.gltf" multiple style="width:100%">
+ <div class="v14row"><button id="v14Folder">📁 Model Folder</button><button id="v14Clear">Clear Library</button></div>
+ <div class="v14status" id="v14Status">Ready • bundled starter GLB library available</div>
+ <div class="v14note">Bundled models are editable starter assets. You can add your own manufacturer/product GLB or GLTF files; imported models remain freely movable and resizable.</div>
+</div>
+<script id="v14-script">
+(()=>{
+ const panel=document.getElementById('v14Panel'), list=document.getElementById('v14Models'), status=document.getElementById('v14Status');
+ const cats=['All','Cabinets','Appliances','Free Elements']; let library=[], active='All';
+ const esc=x=>String(x).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+ const setStatus=t=>status.textContent=t;
+ const fallback=[
+  {id:'base600',name:'Base Cabinet 600',category:'Cabinets',file:'assets/models/cabinets/base-cabinet-600.glb',w:600,h:820,d:560},
+  {id:'wall600',name:'Wall Cabinet 600',category:'Cabinets',file:'assets/models/cabinets/wall-cabinet-600.glb',w:600,h:720,d:320},
+  {id:'pantry600',name:'Tall Pantry 600',category:'Cabinets',file:'assets/models/cabinets/tall-pantry-600.glb',w:600,h:2100,d:600},
+  {id:'drawer600',name:'3 Drawer Unit 600',category:'Cabinets',file:'assets/models/cabinets/drawer-unit-600.glb',w:600,h:820,d:560},
+  {id:'hob600',name:'Hob 600',category:'Appliances',file:'assets/models/appliances/hob-600.glb',w:600,h:50,d:500},
+  {id:'sink600',name:'Sink 600',category:'Appliances',file:'assets/models/appliances/sink-600.glb',w:600,h:70,d:500},
+  {id:'chimney600',name:'Chimney 600',category:'Appliances',file:'assets/models/appliances/chimney-600.glb',w:600,h:950,d:350},
+  {id:'shelf600',name:'Open Shelf 600',category:'Free Elements',file:'assets/models/free-elements/open-shelf-600.glb',w:600,h:350,d:280}
+ ];
+ library=fallback.slice();
+ function render(){list.innerHTML='';library.filter(m=>active==='All'||m.category===active).forEach(m=>{const el=document.createElement('div');el.className='v14model';el.innerHTML=`<div class="v14thumb"><span class="shape"></span></div><b>${esc(m.name)}</b><small>${esc(m.category)} • ${m.w}×${m.h}×${m.d} mm</small><button>+ Add 3D Model</button>`;el.querySelector('button').onclick=()=>loadModel(m);list.appendChild(el)})}
+ document.querySelectorAll('[data-v14-cat]').forEach(b=>b.onclick=()=>{active=b.dataset.v14Cat;document.querySelectorAll('[data-v14-cat]').forEach(x=>x.classList.toggle('active',x===b));render()});
+ async function loadModel(m){setStatus('Loading '+m.name+'…');try{const r=await fetch(m.file);if(!r.ok)throw new Error('HTTP '+r.status);const buf=await r.arrayBuffer();const loader=new GLTFLoader();loader.parse(buf,'',gltf=>{const o=gltf.scene;o.name=m.name;o.userData={type:'glb-model',name:m.name,modelFile:m.file,dim:{w:m.w/1000,h:m.h/1000,d:m.d/1000},colors:{door:'#f7f8f7',cab:'#dfe4e3',top:'#777b7b'},source:'RR V14 GLB Library'};o.position.set(0,(m.h/1000)/2,0);scene.add(o);objects.push(o);select(o);window.objects=objects;window.selected=selected;setStatus(m.name+' added • W/H/D editable on left')},e=>{throw e});}catch(e){setStatus('Library model load failed • use Local Model Import when opened from file://') }}
+ document.getElementById('v14LocalGLB').addEventListener('change',e=>{[...e.target.files].forEach(f=>{const loader=new GLTFLoader(),url=URL.createObjectURL(f);loader.load(url,gltf=>{const o=gltf.scene;o.name=f.name.replace(/\.(glb|gltf)$/i,'');o.userData={type:'glb-model',name:o.name,modelFile:f.name,dim:{w:1,h:1,d:1},colors:{door:'#f7f8f7',cab:'#dfe4e3',top:'#777b7b'},source:'Local GLB/GLTF'};o.position.set(0,.5,0);scene.add(o);objects.push(o);select(o);setStatus(o.name+' imported • set exact dimensions on left');URL.revokeObjectURL(url)},undefined,()=>setStatus('Could not load '+f.name))})});
+ document.getElementById('v14Folder').onclick=()=>document.getElementById('v14LocalGLB').click();
+ document.getElementById('v14Clear').onclick=()=>{library=fallback.slice();active='All';render();setStatus('Built-in V14 library restored')};
+ render(); window.rrV14={library,loadModel,refresh:render};
+})();
+</script>
+
+
+<style id="v15-style">
+#v15Panel{position:fixed;right:14px;top:72px;z-index:10005;width:340px;max-height:calc(100vh - 88px);overflow:auto;background:#ffffffee;backdrop-filter:blur(16px);border:1px solid #d8dee1;border-radius:16px;padding:12px;box-shadow:0 16px 48px #0002;font:12px system-ui;color:#172126}
+#v15Panel h4{margin:0 0 8px;display:flex;justify-content:space-between;align-items:center;font-size:15px}#v15Panel .badge{font-size:9px;background:#172126;color:#fff;padding:4px 7px;border-radius:99px}.v15tabs{display:flex;gap:5px;margin-bottom:8px}.v15tabs button{flex:1;padding:7px;border:1px solid #d7dfe2;border-radius:8px;background:#f3f6f7;font-weight:800;font-size:10px}.v15tabs button.active{background:#08b5c7;color:#fff;border-color:#08b5c7}.v15search{display:flex;gap:6px}.v15search input{flex:1}.v15chips{display:flex;gap:5px;overflow:auto;margin:7px 0}.v15chips button{white-space:nowrap;padding:5px 8px;border-radius:99px;border:1px solid #d6dee1;background:#fff;font-size:9px;font-weight:800}.v15chips button.active{background:#172126;color:#fff}.v15cards{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.v15card{border:1px solid #dce2e5;border-radius:10px;padding:7px;background:#fafcfc}.v15card:hover{border-color:#08b5c7}.v15thumb{height:48px;border-radius:8px;background:linear-gradient(145deg,#fff,#e4eaec);display:flex;align-items:center;justify-content:center;margin-bottom:6px}.v15shape{width:46px;height:31px;border:2px solid #777;background:#c9a16d;box-shadow:0 4px 8px #0002}.v15card b{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.v15card small{display:block;color:#687277;font-size:8px;margin-top:2px}.v15card button{width:100%;margin-top:6px;padding:6px;border:0;border-radius:7px;background:#172126;color:#fff;font-size:9px;font-weight:800}.v15section{border-top:1px solid #e0e5e7;margin-top:10px;padding-top:10px}.v15grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.v15grid button{padding:7px;border:1px solid #d7dfe2;background:#f2f5f6;border-radius:7px;font-size:10px;font-weight:800}.v15status{margin-top:8px;padding:8px;border-radius:8px;background:#e9fafc;border-left:3px solid #08b5c7;font-size:10px;line-height:1.4}.v15project{display:flex;gap:5px}.v15project button{flex:1;padding:7px;border-radius:7px;background:#eef3f4;font-weight:800;font-size:10px}.v15list{max-height:150px;overflow:auto;margin-top:7px}.v15item{display:flex;gap:6px;align-items:center;padding:6px;border:1px solid #e0e5e7;border-radius:7px;margin-bottom:5px;background:#fff}.v15item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px}.v15item button{padding:4px 6px;border:1px solid #d7dfe2;background:#f4f6f7;border-radius:5px;font-size:9px}@media(max-width:900px){#v15Panel{right:10px;top:auto;bottom:10px;width:300px;max-height:47vh}}
+</style>
+<div id="v15Panel">
+ <h4><span>Designer Workspace</span><span class="badge">V15 PRO</span></h4>
+ <div class="v15tabs"><button class="active" data-v15-tab="library">Catalogue</button><button data-v15-tab="scene">Scene</button><button data-v15-tab="project">Project</button></div>
+ <div id="v15Library">
+  <div class="v15search"><input id="v15Search" type="text" placeholder="Search cabinet, sink, chimney…"><button id="v15Import" style="padding:7px 9px;border-radius:7px;background:#172126;color:#fff;font-weight:800">＋</button></div>
+  <div class="v15chips"><button class="active" data-v15-filter="All">All</button><button data-v15-filter="Cabinets">Cabinets</button><button data-v15-filter="Appliances">Appliances</button><button data-v15-filter="Free Elements">Free</button></div>
+  <div id="v15Cards" class="v15cards"></div>
+ </div>
+ <div id="v15Scene" style="display:none">
+  <div class="v15section" style="border-top:0;margin-top:0;padding-top:0"><b>Quick Transform</b><div class="v15grid" style="margin-top:7px"><button data-act="left">← 50</button><button data-act="right">50 →</button><button data-act="rot">↻ 90°</button><button data-act="ground">Ground</button><button data-act="center">Center</button><button data-act="delete">Delete</button></div></div>
+  <div class="v15section"><b>Scene Objects</b><div id="v15Objects" class="v15list"></div></div>
+ </div>
+ <div id="v15Project" style="display:none">
+  <div class="v15project"><button id="v15New">New Project</button><button id="v15Save">Save Project</button><button id="v15Load">Load Project</button></div>
+  <div class="v15section"><b>Project presets</b><div class="v15grid" style="margin-top:7px"><button data-preset="straight">Straight</button><button data-preset="parallel">Parallel</button><button data-preset="l">L-Shape</button><button data-preset="u">U-Shape</button><button data-preset="island">Island</button><button data-preset="clear">Clear</button></div></div>
+  <div class="v15status" id="v15Status">Ready • Designer Workspace active • Collision OFF</div>
+ </div>
+</div>
+<script id="v15-script">
+(()=>{
+ const q=s=>document.querySelector(s), qa=s=>[...document.querySelectorAll(s)];
+ const v14=q('#v14Panel'); if(v14)v14.style.display='none';
+ const cards=q('#v15Cards'), search=q('#v15Search'), objs=q('#v15Objects'), status=q('#v15Status');
+ let filter='All';
+ function clean(t){return String(t).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+ function sourceCards(){
+   return [...document.querySelectorAll('#v14Models .v14model')].map(el=>({el,name:el.querySelector('b')?.textContent||'',meta:el.querySelector('small')?.textContent||'',button:el.querySelector('button')}));
+ }
+ function render(){const term=(search.value||'').toLowerCase();cards.innerHTML='';sourceCards().filter(x=>(filter==='All'||x.meta.startsWith(filter))&&x.name.toLowerCase().includes(term)).forEach(x=>{const c=document.createElement('div');c.className='v15card';c.innerHTML='<div class="v15thumb"><span class="v15shape"></span></div><b>'+clean(x.name)+'</b><small>'+clean(x.meta)+'</small><button>+ Add 3D Model</button>';c.querySelector('button').onclick=()=>x.button?.click();cards.appendChild(c)})}
+ qa('[data-v15-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.v15Filter;qa('[data-v15-filter]').forEach(x=>x.classList.toggle('active',x===b));render()});
+ search.addEventListener('input',render); q('#v15Import').onclick=()=>q('#v14LocalGLB')?.click();
+ qa('[data-v15-tab]').forEach(b=>b.onclick=()=>{qa('[data-v15-tab]').forEach(x=>x.classList.toggle('active',x===b));['library','scene','project'].forEach(t=>{const el=q('#v15'+t[0].toUpperCase()+t.slice(1));if(el)el.style.display=b.dataset.v15Tab===t?'block':'none'}); if(b.dataset.v15Tab==='scene')refreshObjects()});
+ function getObjects(){return Array.isArray(window.objects)?window.objects:[]}
+ function refreshObjects(){const arr=getObjects();objs.innerHTML='';if(!arr.length){objs.innerHTML='<div style="color:#687277;font-size:10px">No placed objects yet.</div>';return}arr.forEach((o,i)=>{const row=document.createElement('div');row.className='v15item';row.innerHTML='<span>'+clean((o.name||o.userData?.name||o.userData?.type||'Object'))+'</span><button>SELECT</button>';row.querySelector('button').onclick=()=>{try{window.select?.(o)}catch(e){};status&&(status.textContent='Selected • '+(o.name||'Object'))};objs.appendChild(row)})}
+ function selected(){return window.selected||null}
+ function act(a){const o=selected();if(!o){if(status)status.textContent='Select an object first';return}const step=.05;if(a==='left')o.position.x-=step;if(a==='right')o.position.x+=step;if(a==='rot')o.rotation.y+=Math.PI/2;if(a==='ground')o.position.y=(o.userData?.dim?.h||1)/2;if(a==='center'){o.position.x=0;o.position.z=0}if(a==='delete'){window.del?.();refreshObjects();return}try{window.select?.(o)}catch(e){};if(status)status.textContent='Updated • '+(o.name||'Object')}
+ qa('[data-act]').forEach(b=>b.onclick=()=>act(b.dataset.act));
+ q('#v15New').onclick=()=>{q('#v14Clear')?.click();q('#delete')?.click();if(status)status.textContent='New project workspace ready'};
+ q('#v15Save').onclick=()=>q('#saveProject')?.click();q('#v15Load').onclick=()=>q('#loadProject')?.click();
+ qa('[data-preset]').forEach(b=>b.onclick=()=>{const map={straight:'straight',parallel:'parallel',l:'l',u:'u',island:'island',clear:'clear'};const target=document.querySelector('[data-layout="'+map[b.dataset.preset]+'"]');target?.click();if(status)status.textContent=b.textContent+' layout applied • editable'});
+ setInterval(()=>{if(q('#v15Panel')?.style.display!=='none')refreshObjects()},1200);
+ setTimeout(render,250); window.rrV15={refresh:render,refreshObjects,act};
+})();
+</script>
+
+
+<style>
+#v16{position:fixed;left:14px;bottom:14px;width:350px;max-height:72vh;overflow:auto;background:rgba(15,20,24,.96);color:#eef3f4;border:1px solid #3d4b52;border-radius:14px;z-index:9999;padding:12px;box-shadow:0 16px 50px rgba(0,0,0,.35);font:12px system-ui}
+#v16 h3{margin:0 0 8px;font-size:15px}#v16 .row{display:flex;gap:6px;margin:6px 0;flex-wrap:wrap}#v16 input,#v16 select,#v16 button{border:1px solid #52616a;background:#202a2f;color:#eef3f4;border-radius:7px;padding:6px;font-size:11px}#v16 input{flex:1;min-width:120px}#v16 button{cursor:pointer}.v16tab{font-weight:700}.v16card{border:1px solid #3d4b52;border-radius:9px;padding:8px;margin:6px 0;background:#192126}.v16card b{display:block;margin-bottom:3px}.v16small{font-size:10px;color:#aab7bc}.v16pill{display:inline-block;border:1px solid #46565e;border-radius:20px;padding:3px 6px;margin:2px;font-size:10px}.v16section{border-top:1px solid #334047;margin-top:9px;padding-top:8px}.v16hide{display:none}
+</style>
+<div id="v16">
+ <h3>RR Designer Workspace <span class="v16pill">V16</span></h3>
+ <div class="row"><input id="v16search" placeholder="Search model, brand, material…"><select id="v16cat"><option>All</option><option>Cabinets</option><option>Appliances</option><option>Free Elements</option></select></div>
+ <div class="row"><button id="v16brandBtn">Brand Library</button><button id="v16matBtn">Material Library</button><button id="v16new">New Project</button></div>
+ <div id="v16filters" class="v16section"></div><div id="v16catalog"></div>
+ <div class="v16section"><b>Project Manager</b><div class="row"><input id="v16project" placeholder="Project name"><button id="v16save">Save</button><button id="v16load">Load</button><button id="v16delproj">Delete</button></div><select id="v16projects" style="width:100%"></select></div>
+ <div class="v16section"><b>Quick Materials</b><div class="row" id="v16mats"></div></div>
+ <div class="v16small">V16 • Real GLB/GLTF catalogue • brands/materials • local multi-project manager • collision OFF</div>
+</div>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ const catalog=[
+  {name:'Base Cabinet 600',cat:'Cabinets',brand:'RR Standard',material:'Laminate',w:600,h:720,d:560,file:'assets/models/cabinets/base-cabinet-600.glb'},
+  {name:'Wall Cabinet 600',cat:'Cabinets',brand:'RR Standard',material:'Acrylic',w:600,h:720,d:350,file:'assets/models/cabinets/wall-cabinet-600.glb'},
+  {name:'3 Drawer Unit 600',cat:'Cabinets',brand:'RR Premium',material:'Laminate',w:600,h:720,d:560,file:'assets/models/cabinets/drawer-unit-600.glb'},
+  {name:'Tall Pantry 600',cat:'Cabinets',brand:'RR Premium',material:'Acrylic',w:600,h:2100,d:560,file:'assets/models/cabinets/tall-pantry-600.glb'},
+  {name:'Hob 600',cat:'Appliances',brand:'Hindware Style',material:'Steel',w:600,h:80,d:520,file:'assets/models/appliances/hob-600.glb'},
+  {name:'Sink 600',cat:'Appliances',brand:'RR Kitchen',material:'Steel',w:600,h:220,d:500,file:'assets/models/appliances/sink-600.glb'},
+  {name:'Chimney 600',cat:'Appliances',brand:'RR Kitchen',material:'Steel',w:600,h:600,d:450,file:'assets/models/appliances/chimney-600.glb'},
+  {name:'Open Shelf 600',cat:'Free Elements',brand:'RR Design',material:'Oak',w:600,h:300,d:300,file:'assets/models/free-elements/open-shelf-600.glb'}
+ ];
+ const brands=['All Brands','RR Standard','RR Premium','RR Design','RR Kitchen','Hindware Style'];
+ const mats=['All Materials','Acrylic','Laminate','Oak','Sage','Graphite','Sand','Steel'];
+ let activeBrand='All Brands', activeMat='All Materials';
+ function renderFilters(){ $('v16filters').innerHTML='<div class="row"><select id="v16brand">'+brands.map(x=>`<option>${x}</option>`).join('')+'</select><select id="v16material">'+mats.map(x=>`<option>${x}</option>`).join('')+'</select></div>'; $('v16brand').value=activeBrand;$('v16material').value=activeMat;$('v16brand').onchange=e=>{activeBrand=e.target.value;render()};$('v16material').onchange=e=>{activeMat=e.target.value;render()}; }
+ function render(){const q=$('v16search').value.toLowerCase(),c=$('v16cat').value;let arr=catalog.filter(x=>(c==='All'||x.cat===c)&&(!q||(x.name+x.brand+x.material).toLowerCase().includes(q))&&(activeBrand==='All Brands'||x.brand===activeBrand)&&(activeMat==='All Materials'||x.material===activeMat));$('v16catalog').innerHTML=arr.map((x,i)=>`<div class="v16card"><b>${x.name}</b><span class="v16small">${x.cat} • ${x.brand} • ${x.material} • ${x.w}×${x.h}×${x.d} mm</span><div class="row"><button data-i="${catalog.indexOf(x)}">ADD 3D MODEL</button><button data-fit="${catalog.indexOf(x)}">ADD + GROUND</button></div></div>`).join('')||'<div class="v16small">No models found.</div>';$('v16catalog').querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>addModel(catalog[+b.dataset.i],false));$('v16catalog').querySelectorAll('[data-fit]').forEach(b=>b.onclick=()=>addModel(catalog[+b.dataset.fit],true));}
+ async function addModel(m,ground){if(window.rrV14?.loadModel){await window.rrV14.loadModel(m);if(ground&&window.selected)window.selected.position.y=(m.h/1000)/2;}else alert('V14 model loader not available');}
+ $('v16search').oninput=render;$('v16cat').onchange=render;$('v16brandBtn').onclick=()=>{activeBrand='All Brands';renderFilters();render();alert('Brand Library ready: '+brands.slice(1).join(', '));};$('v16matBtn').onclick=()=>{activeMat='All Materials';renderFilters();render();alert('Material Library ready: '+mats.slice(1).join(', '));};
+ const materialPresets={Acrylic:{door:'#f7f8f7',cab:'#dfe4e3',top:'#f0f0ee'},Laminate:{door:'#c9a67b',cab:'#a98661',top:'#7a654f'},Oak:{door:'#b78b5b',cab:'#8c633f',top:'#76502f'},Sage:{door:'#9cae9b',cab:'#71806f',top:'#5f6b5e'},Graphite:{door:'#3d4448',cab:'#292e31',top:'#202326'},Sand:{door:'#d8c8ad',cab:'#b8a78e',top:'#9e8c72'},Steel:{door:'#aeb6ba',cab:'#7d878c',top:'#666f73'}};
+ Object.keys(materialPresets).forEach(k=>{let b=document.createElement('button');b.textContent=k;b.onclick=()=>window.rrV13?.finish(materialPresets[k]);$('v16mats').appendChild(b)});
+ const key='rrV16Projects';function projects(){try{return JSON.parse(localStorage.getItem(key)||'{}')}catch(e){return {}}}function refreshProjects(){const p=projects();$('v16projects').innerHTML=Object.keys(p).map(n=>`<option>${n}</option>`).join('');if($('v16project').value==='')$('v16project').value=Object.keys(p)[0]||''}
+ function sceneData(){return window.projectData?.()||{version:'V16',objects:(window.objects||[]).map(o=>({name:o.name||o.userData?.name,type:o.userData?.type,pos:o.position.toArray(),rot:o.rotation.y,scale:o.scale.toArray(),dim:o.userData?.dim}))};}
+ $('v16save').onclick=()=>{let n=$('v16project').value.trim();if(!n)return alert('Project name enter karein');let p=projects();p[n]=sceneData();localStorage.setItem(key,JSON.stringify(p));refreshProjects();alert('Project saved: '+n)};
+ $('v16load').onclick=()=>{let n=$('v16projects').value;if(!n)return;let p=projects()[n];if(p&&window.loadProject){window.loadProject(p);alert('Project loaded: '+n)}else alert('Project metadata saved. Full GLB geometry may require re-import.');};
+ $('v16delproj').onclick=()=>{let n=$('v16projects').value;if(!n)return;let p=projects();delete p[n];localStorage.setItem(key,JSON.stringify(p));refreshProjects()};
+ $('v16new').onclick=()=>{if(confirm('Start a new project? Current unsaved scene will remain until you clear units.')){ $('v16project').value='New Kitchen'; }};
+ renderFilters();render();refreshProjects();
+ window.rrV16={catalog,materials:materialPresets,render,addModel};
+})();
+</script>
+
+
+<style>
+#v17Panel{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:10020;width:min(760px,calc(100vw - 24px));background:#ffffffee;backdrop-filter:blur(14px);border:1px solid #d5dde0;border-radius:16px;padding:10px;box-shadow:0 14px 45px #0002;font:12px system-ui;color:#172126}
+#v17Panel h3{margin:0 0 7px;font-size:14px;display:flex;justify-content:space-between}.v17pill{background:#172126;color:#fff;padding:3px 7px;border-radius:99px;font-size:9px}
+.v17row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.v17search{flex:1;min-width:180px;padding:7px 9px;border:1px solid #ccd6da;border-radius:9px}.v17row select,.v17row button{padding:7px 9px;border:1px solid #ccd6da;border-radius:9px;background:#f5f8f9;font-weight:700;font-size:10px}.v17cards{display:flex;gap:7px;overflow:auto;padding:8px 0 3px}.v17card{min-width:120px;border:1px solid #d9e1e4;border-radius:11px;padding:7px;background:#fafcfc;cursor:grab}.v17card:active{cursor:grabbing}.v17thumb{height:52px;border-radius:8px;background:linear-gradient(145deg,#f9fbfb,#e3e9eb);display:flex;align-items:center;justify-content:center;margin-bottom:6px}.v17shape{width:45px;height:32px;background:#c9a16d;border:2px solid #6d767a;border-radius:3px;box-shadow:0 4px 9px #0002}.v17card b{display:block;font-size:10px}.v17card small{display:block;color:#68757b;font-size:9px;margin-top:2px}.v17hint{font-size:9px;color:#68757b;margin-top:6px}.v17drop{outline:3px dashed #08b5c7!important;outline-offset:-5px}
+</style>
+<div id="v17Panel">
+ <h3><span>RR 3D Kitchen — Drag & Drop Catalogue</span><span class="v17pill">V22 PRO</span></h3>
+ <div class="v17row"><input id="v17Search" class="v17search" placeholder="Search cabinet, appliance, shelf…"><select id="v17Cat"><option>All</option><option>Cabinets</option><option>Appliances</option><option>Free Elements</option></select><button id="v17Reset">Reset View</button></div>
+ <div id="v17Cards" class="v17cards"></div>
+ <div class="v17hint">Drag any item and drop it directly on the 3D kitchen. It will be added at the drop position. Collision remains OFF. Use the existing W/H/D fields for exact sizing.</div>
+</div>
+<script id="v18-script">
+(()=>{
+ const $=id=>document.getElementById(id), cards=$('v17Cards');
+ const data=[
+  {name:'Base Cabinet 600',cat:'Cabinets',w:600,h:820,d:560,file:'assets/models/cabinets/base-cabinet-600.glb'},
+  {name:'Wall Cabinet 600',cat:'Cabinets',w:600,h:720,d:320,file:'assets/models/cabinets/wall-cabinet-600.glb'},
+  {name:'Tall Pantry 600',cat:'Cabinets',w:600,h:2100,d:600,file:'assets/models/cabinets/tall-pantry-600.glb'},
+  {name:'3 Drawer Unit 600',cat:'Cabinets',w:600,h:820,d:560,file:'assets/models/cabinets/drawer-unit-600.glb'},
+  {name:'Hob 600',cat:'Appliances',w:600,h:50,d:520,file:'assets/models/appliances/hob-600.glb'},
+  {name:'Sink 600',cat:'Appliances',w:600,h:220,d:500,file:'assets/models/appliances/sink-600.glb'},
+  {name:'Chimney 600',cat:'Appliances',w:600,h:600,d:450,file:'assets/models/appliances/chimney-600.glb'},
+  {name:'Open Shelf 600',cat:'Free Elements',w:600,h:300,d:300,file:'assets/models/free-elements/open-shelf-600.glb'}
+ ];
+ function render(){let q=($('v17Search').value||'').toLowerCase(),c=$('v17Cat').value;cards.innerHTML=data.filter(x=>(c==='All'||x.cat===c)&&x.name.toLowerCase().includes(q)).map((x,i)=>`<div class="v17card" draggable="true" data-i="${i}"><div class="v17thumb"><span class="v17shape"></span></div><b>${x.name}</b><small>${x.cat} • ${x.w}×${x.h}×${x.d} mm</small></div>`).join('');cards.querySelectorAll('.v17card').forEach(el=>el.addEventListener('dragstart',e=>{e.dataTransfer.setData('application/rr-v18',JSON.stringify(data[+el.dataset.i]));e.dataTransfer.effectAllowed='copy';}));}
+ function canvas(){return document.getElementById('canvas')}
+ const cv=canvas();
+ cv.addEventListener('dragover',e=>{if(e.dataTransfer.types.includes('application/rr-v18')){e.preventDefault();cv.classList.add('v17drop');e.dataTransfer.dropEffect='copy'}});
+ cv.addEventListener('dragleave',()=>cv.classList.remove('v17drop'));
+ cv.addEventListener('drop',e=>{e.preventDefault();cv.classList.remove('v17drop');try{const m=JSON.parse(e.dataTransfer.getData('application/rr-v18'));if(!window.rrV14?.loadModel)return; const rect=cv.getBoundingClientRect(); const x=((e.clientX-rect.left)/rect.width)*2-1; const y=-((e.clientY-rect.top)/rect.height)*2+1; const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2(x,y),window.camera);const plane=new THREE.Plane(new THREE.Vector3(0,1,0),0);const p=new THREE.Vector3();if(ray.ray.intersectPlane(plane,p)){window.rrV14.loadModel(m).then(()=>{const o=window.selected;if(o){o.position.x=p.x;o.position.z=p.z;o.position.y=m.h/2000;window.select?.(o)}})}}catch(err){console.error(err)}});
+ $('v17Search').addEventListener('input',render);$('v17Cat').addEventListener('change',render);$('v17Reset').onclick=()=>window.v9ResetView?.()||window.rrV10?.fitRoom?.();render();
+ window.rrV17={data,render};
+})();
+</script>
+
+
+<style>
+#v18WallTools{position:fixed;right:14px;bottom:14px;z-index:9999;width:280px;background:rgba(18,22,30,.96);color:#fff;border:1px solid #4b5563;border-radius:14px;padding:12px;font:13px/1.35 system-ui;box-shadow:0 10px 35px rgba(0,0,0,.35)}
+#v18WallTools h3{margin:0 0 8px;font-size:15px}
+#v18WallTools .row{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+#v18WallTools button,#v18WallTools select{background:#252b36;color:#fff;border:1px solid #596273;border-radius:8px;padding:6px 8px}
+#v18WallTools .hint{opacity:.72;font-size:11px}
+</style>
+<div id="v18WallTools">
+  <h3>V22 Wall Placement</h3>
+  <div class="row">
+    <button data-wall="back">Back Wall</button>
+    <button data-wall="left">Left Wall</button>
+    <button data-wall="right">Right Wall</button>
+    <button data-wall="front">Front Wall</button>
+  </div>
+  <div class="row">
+    <button id="v18Base">Base / Floor</button>
+    <button id="v18Wall">Wall Cabinet</button>
+    <button id="v18Tall">Tall / Pantry</button>
+    <button id="v18Free">Free</button>
+  </div>
+  <div class="row">
+    <label>Offset <input id="v18Offset" type="number" value="0" step="10" style="width:70px"> mm</label>
+  </div>
+  <div class="hint">Select an object, choose a wall/type. No collision or fit warning is applied.</div>
+</div>
+<script>
+(function(){
+  function getSelected(){
+    return window.selected || window.activeObject || null;
+  }
+  function dims(o){
+    let w=600,h=720,d=560;
+    try{
+      if(o && o.userData){
+        w=+o.userData.width||+o.userData.w||w;
+        h=+o.userData.height||+o.userData.h||h;
+        d=+o.userData.depth||+o.userData.d||d;
+      }
+    }catch(e){}
+    return {w,h,d};
+  }
+  function room(){
+    let R=window.roomSize||window.room||{};
+    return {w:+R.width||+R.w||3600,h:+R.height||+R.h||2700,d:+R.depth||+R.d||3600};
+  }
+  function applyWall(wall){
+    const o=getSelected(); if(!o) return;
+    const r=room(), d=dims(o), off=(+document.getElementById('v18Offset').value||0)/1000;
+    // Work in meters; if the app uses mm, existing numeric controls can still be used separately.
+    if(wall==='back'){o.position.z=-(r.d/2000)+d.d/2000+off;o.rotation.y=0;}
+    if(wall==='front'){o.position.z=(r.d/2000)-d.d/2000-off;o.rotation.y=Math.PI;}
+    if(wall==='left'){o.position.x=-(r.w/2000)+d.d/2000+off;o.rotation.y=Math.PI/2;}
+    if(wall==='right'){o.position.x=(r.w/2000)-d.d/2000-off;o.rotation.y=-Math.PI/2;}
+    try{ if(window.updateTransform) window.updateTransform(o); }catch(e){}
+    try{ if(window.refreshUI) window.refreshUI(); }catch(e){}
+  }
+  function setType(type){
+    const o=getSelected(); if(!o) return;
+    const r=room(), d=dims(o);
+    if(type==='base'){o.position.y=Math.max(0,d.h/2000);}
+    if(type==='wall'){o.position.y=Math.max(d.h/2000,1.45);}
+    if(type==='tall'){o.position.y=Math.max(d.h/2000,0);}
+    if(type==='free'){}
+    try{ if(window.updateTransform) window.updateTransform(o); }catch(e){}
+    try{ if(window.refreshUI) window.refreshUI(); }catch(e){}
+  }
+  document.querySelectorAll('#v18WallTools [data-wall]').forEach(b=>b.onclick=()=>applyWall(b.dataset.wall));
+  document.getElementById('v18Base').onclick=()=>setType('base');
+  document.getElementById('v18Wall').onclick=()=>setType('wall');
+  document.getElementById('v18Tall').onclick=()=>setType('tall');
+  document.getElementById('v18Free').onclick=()=>setType('free');
+})();
+</script>
+
+<style>#v19SnapTools{position:fixed;right:14px;bottom:14px;z-index:99999;width:300px;background:#151922;color:#fff;border:1px solid #596273;border-radius:14px;padding:12px;font:13px system-ui;box-shadow:0 10px 35px #0008}#v19SnapTools h3{margin:0 0 8px}#v19SnapTools button,#v19SnapTools select{background:#252b36;color:#fff;border:1px solid #596273;border-radius:8px;padding:6px;margin:3px}.v19hint{opacity:.75;font-size:11px}</style><div id="v19SnapTools"><h3>V22 Precision Snap</h3><div><button id="v19toggle">Snap: ON</button><select id="v19step"><option>25</option><option selected>50</option><option>100</option></select> mm</div><div><button data-v22="back">Back Wall</button><button data-v22="front">Front Wall</button><button data-v22="left">Left Wall</button><button data-v22="right">Right Wall</button><button id="v19floor">Floor</button></div><div class="v19hint">Collision OFF · Fit warning OFF</div></div><script>(function(){let on=true;const q=x=>document.querySelector(x),sel=()=>window.selected||window.activeObject;function dims(o){let u=o&&o.userData||{};return{w:+u.width||+u.w||600,h:+u.height||+u.h||720,d:+u.depth||+u.d||560}}function room(){let r=window.roomSize||window.room||{};return{w:+r.width||+r.w||3600,d:+r.depth||+r.d||3600}}function sm(v){let st=+q('#v19step').value/1000;return Math.round(v/st)*st}function done(o){try{window.updateTransform&&window.updateTransform(o)}catch(e){}try{window.refreshUI&&window.refreshUI()}catch(e){}}function floor(){let o=sel();if(!o)return;let d=dims(o);o.position.y=d.h/2000;if(on){o.position.x=sm(o.position.x);o.position.z=sm(o.position.z)}done(o)}function wall(w){let o=sel();if(!o)return;let r=room(),d=dims(o),D=d.d/2000,W=r.w/2000,Z=r.d/2000;if(w==='back'){o.position.z=-Z+D;o.rotation.y=0}if(w==='front'){o.position.z=Z-D;o.rotation.y=Math.PI}if(w==='left'){o.position.x=-W+D;o.rotation.y=Math.PI/2}if(w==='right'){o.position.x=W-D;o.rotation.y=-Math.PI/2}if(on){o.position.x=sm(o.position.x);o.position.z=sm(o.position.z)}done(o)}q('#v19toggle').onclick=()=>{on=!on;q('#v19toggle').textContent='Snap: '+(on?'ON':'OFF')};document.querySelectorAll('[data-v22]').forEach(b=>b.onclick=()=>wall(b.dataset.v22));q('#v19floor').onclick=floor})()</script>
+<style>
+#v20RoomEditor{position:fixed;left:14px;bottom:14px;z-index:10001;width:315px;background:rgba(15,18,24,.97);color:#fff;border:1px solid #4b5563;border-radius:14px;padding:12px;font:13px/1.35 system-ui;box-shadow:0 10px 35px rgba(0,0,0,.38)}
+#v20RoomEditor h3{margin:0 0 8px;font-size:15px}
+#v20RoomEditor .r{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+#v20RoomEditor input,#v20RoomEditor select,#v20RoomEditor button{background:#252b36;color:#fff;border:1px solid #596273;border-radius:8px;padding:6px 8px}
+#v20RoomEditor input{width:72px}
+#v20RoomEditor .hint{font-size:11px;opacity:.72}
+#v20RoomStatus{font-size:11px;opacity:.82;margin-top:7px}
+</style>
+<div id="v20RoomEditor">
+  <h3>V22 Professional Room Editor</h3>
+  <div class="r">
+    <label>L <input id="v20L" type="number" value="3600" step="50"> mm</label>
+    <label>W <input id="v20W" type="number" value="3600" step="50"> mm</label>
+    <label>H <input id="v20H" type="number" value="2700" step="50"> mm</label>
+    <button id="v20ApplyRoom">Apply Room</button>
+  </div>
+  <div class="r">
+    <button id="v20Floor">Floor</button>
+    <button id="v20Ceiling">Ceiling</button>
+    <button id="v20Walls">Walls</button>
+  </div>
+  <div class="r">
+    <button id="v20Door">Add Door</button>
+    <button id="v20Window">Add Window</button>
+    <button id="v20ClearOpenings">Clear Openings</button>
+  </div>
+  <div class="r">
+    <button id="v20Present">Presentation</button>
+    <button id="v20ResetView">Reset View</button>
+  </div>
+  <div id="v20RoomStatus">Room editor ready · Collision OFF · Fit warning OFF</div>
+  <div class="hint">Room dimensions are editable. Door/window helpers are visual and do not create collision restrictions.</div>
+</div>
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  function scene(){
+    return window.scene || null;
+  }
+  function makeBox(name,w,h,d,color){
+    if(!window.THREE || !scene()) return null;
+    const g=new THREE.Group(); g.name=name;
+    const m=new THREE.MeshStandardMaterial({color:color||0xdddddd,roughness:.7,metalness:0});
+    const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);
+    mesh.castShadow=true; mesh.receiveShadow=true; g.add(mesh);
+    scene().add(g);
+    return g;
+  }
+  function roomSize(){
+    return {
+      L:Number($('v20L').value)||3600,
+      W:Number($('v20W').value)||3600,
+      H:Number($('v20H').value)||2700
+    };
+  }
+  function setStatus(t){ $('v20RoomStatus').textContent=t; }
+  function applyRoom(){
+    const r=roomSize();
+    window.RR_V20_ROOM={length:r.L,width:r.W,height:r.H};
+    try{
+      if(window.updateRoom) window.updateRoom(r.L,r.W,r.H);
+      else if(window.resizeRoom) window.resizeRoom(r.L,r.W,r.H);
+    }catch(e){}
+    setStatus('Room: '+r.L+' × '+r.W+' × '+r.H+' mm · Collision OFF');
+  }
+  function floor(){
+    const r=roomSize();
+    const g=makeBox('V20_Floor',r.L/1000,.03,r.W/1000,0xdddddd);
+    if(g) g.position.y=-.015;
+  }
+  function ceiling(){
+    const r=roomSize();
+    const g=makeBox('V20_Ceiling',r.L/1000,.03,r.W/1000,0xf1f1f1);
+    if(g) g.position.y=r.H/1000;
+  }
+  function walls(){
+    const r=roomSize(), L=r.L/1000, W=r.W/1000, H=r.H/1000, t=.04;
+    const a=makeBox('V20_BackWall',L,H,t,0xe7e7e7);
+    const b=makeBox('V20_LeftWall',t,H,W,0xe7e7e7);
+    const c=makeBox('V20_RightWall',t,H,W,0xe7e7e7);
+    if(a)a.position.z=-W/2;
+    if(b)b.position.x=-L/2;
+    if(c)c.position.x=L/2;
+  }
+  function opening(type){
+    const r=roomSize(), L=r.L/1000, H=r.H/1000;
+    const w=type==='door'?0.9:1.5, h=type==='door'?2.1:1.2;
+    const g=makeBox('V20_'+(type==='door'?'Door':'Window'),w,h,.035,type==='door'?0x6b4f35:0x87b7d6);
+    if(g){ g.position.z=-r.W/2000-.025; g.position.y=h/2; g.userData.v20Opening=type; }
+  }
+  function clearOpenings(){
+    const s=scene(); if(!s) return;
+    const remove=[];
+    s.traverse(o=>{if(o.userData && o.userData.v20Opening) remove.push(o.parent||o);});
+    [...new Set(remove)].forEach(o=>{if(o!==s)s.remove(o);});
+  }
+  $('v20ApplyRoom').onclick=applyRoom;
+  $('v20Floor').onclick=floor;
+  $('v20Ceiling').onclick=ceiling;
+  $('v20Walls').onclick=walls;
+  $('v20Door').onclick=()=>opening('door');
+  $('v20Window').onclick=()=>opening('window');
+  $('v20ClearOpenings').onclick=clearOpenings;
+  $('v20Present').onclick=()=>{
+    document.body.classList.add('v20Presentation');
+    setStatus('Presentation mode · realistic room view');
+  };
+  $('v20ResetView').onclick=()=>{
+    document.body.classList.remove('v20Presentation');
+    try{if(window.resetView)window.resetView();}catch(e){}
+    setStatus('View reset');
+  };
+})();
+</script>
+
+
+<style>
+#v22RoomEngine{position:fixed;left:14px;top:14px;z-index:10002;width:330px;background:rgba(15,18,24,.97);color:#fff;border:1px solid #4b5563;border-radius:14px;padding:12px;font:13px/1.35 system-ui;box-shadow:0 10px 35px rgba(0,0,0,.38)}
+#v22RoomEngine h3{margin:0 0 8px;font-size:15px}
+#v22RoomEngine .r{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+#v22RoomEngine input,#v22RoomEngine select,#v22RoomEngine button{background:#252b36;color:#fff;border:1px solid #596273;border-radius:8px;padding:6px 8px}
+#v22RoomEngine input{width:66px}
+#v22RoomEngine .hint{font-size:11px;opacity:.72}
+#v22Status{font-size:11px;opacity:.82;margin-top:7px}
+</style>
+<div id="v22RoomEngine">
+  <h3>V22 Real Opening Room Engine</h3>
+  <div class="r">
+    <button id="v22BuildWalls">Build Room</button>
+    <button id="v22ClearWalls">Clear Room Shell</button>
+  </div>
+  <div class="r">
+    <button id="v22Door">Door Opening</button>
+    <button id="v22Window">Window Opening</button>
+    <button id="v22RemoveOpening">Remove Opening</button>
+  </div>
+  <div class="r">
+    <label>Width <input id="v22OW" type="number" value="900" step="50"> mm</label>
+    <label>Height <input id="v22OH" type="number" value="2100" step="50"> mm</label>
+  </div>
+  <div class="r">
+    <label>Wall
+      <select id="v22Wall">
+        <option value="back">Back</option>
+        <option value="front">Front</option>
+        <option value="left">Left</option>
+        <option value="right">Right</option>
+      </select>
+    </label>
+    <label>Position <input id="v22Pos" type="number" value="0" step="50"> mm</label>
+  </div>
+  <div id="v22Status">V22 room engine ready · Collision OFF</div>
+  <div class="hint">Openings are built as segmented wall geometry, so the wall itself has a real visible gap. No collision/fit warning is added.</div>
+</div>
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  let shellGroup=null, opening=null;
+  function getScene(){return window.scene||null;}
+  function room(){
+    const R=window.RR_V20_ROOM||window.RR_V22_ROOM||window.roomSize||{};
+    return {
+      L:Number(R.length||R.L||R.width||3600),
+      W:Number(R.width||R.W||R.depth||3600),
+      H:Number(R.height||R.H||2700)
+    };
+  }
+  function mat(c){return new THREE.MeshStandardMaterial({color:c,roughness:.75,metalness:0});}
+  function box(group,name,w,h,d,x,y,z){
+    const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(0xe5e5e5));
+    m.name=name; m.position.set(x,y,z); m.castShadow=true; m.receiveShadow=true; group.add(m); return m;
+  }
+  function clearGroup(g){
+    if(!g)return;
+    const s=getScene(); if(!s)return;
+    s.remove(g);
+    g.traverse(o=>{if(o.geometry)o.geometry.dispose(); if(o.material)o.material.dispose();});
+  }
+  function build(){
+    const s=getScene(); if(!s || !window.THREE)return;
+    clearGroup(shellGroup);
+    shellGroup=new THREE.Group(); shellGroup.name="V22_RealRoomShell";
+    const r=room(), L=r.L/1000,W=r.W/1000,H=r.H/1000,t=.06;
+    // Default shell: four continuous walls, floor and ceiling. Openings are applied by rebuilding the affected wall.
+    box(shellGroup,"BackWall",L,H,t,0,H/2,-W/2);
+    box(shellGroup,"FrontWall",L,H,t,0,H/2,W/2);
+    box(shellGroup,"LeftWall",t,H,W,-L/2,H/2,0);
+    box(shellGroup,"RightWall",t,H,W,L/2,H/2,0);
+    box(shellGroup,"Floor",L,.04,W,0,-.02,0);
+    box(shellGroup,"Ceiling",L,.04,W,0,H+.02,0);
+    s.add(shellGroup);
+    opening=null;
+    applyOpening(false);
+    $('v22Status').textContent='Room shell built · '+r.L+' × '+r.W+' × '+r.H+' mm';
+  }
+  function segmentedWall(group,wall,ow,oh,pos){
+    const r=room(), L=r.L/1000,W=r.W/1000,H=r.H/1000,t=.06;
+    const w=ow/1000,h=oh/1000,p=pos/1000;
+    let wallLen=(wall==='back'||wall==='front')?L:W;
+    // p is along the wall length; center at y=h/2 for door, or 1.45m for window.
+    const y=opening && opening.type==='window' ? Math.min(H-h/2,1.45) : h/2;
+    const bottomH=opening && opening.type==='window' ? y-h/2 : 0;
+    const topStart=y+h/2;
+    const sideA=(wallLen-w)/2+p;
+    const sideB=(wallLen-w)/2-p;
+    if(bottomH>0) box(group,wall+"_Lower",wallLen,H*0+w*.00001, t,0,0,0); // placeholder removed below
+    // Replace affected wall with 3 horizontal/vertical sections. For windows, lower wall remains continuous.
+    // Remove placeholder if any.
+    const children=[...group.children]; children.forEach(o=>{if(o.name===wall+"_Lower")group.remove(o);});
+    const z=wall==='back'?-W/2:(wall==='front'?W/2:0);
+    const x=wall==='left'?-L/2:(wall==='right'?L/2:0);
+    const isH=wall==='back'||wall==='front';
+    if(opening && opening.type==='window'){
+      box(group,wall+"_Lower",isH?wallLen:t,y-h/2,t,isH?0:x,(y-h/2)/2,isH?z:0);
+      box(group,wall+"_Upper",isH?wallLen:t,H-topStart,t,isH?0:x,topStart+(H-topStart)/2,isH?z:0);
+      const gapL=(wallLen-w)/2+p, gapR=(wallLen-w)/2-p;
+      box(group,wall+"_Left",isH?gapL:t,h,isH?(-wallLen+gapL)/2:x,y,isH?z:0);
+      box(group,wall+"_Right",isH?gapR:t,h,isH?(wallLen-gapR)/2:x,y,isH?z:0);
+    }else{
+      box(group,wall+"_Top",isH?wallLen:t,H-h,t,isH?0:x,h+(H-h)/2,isH?z:0);
+      const gapL=(wallLen-w)/2+p, gapR=(wallLen-w)/2-p;
+      box(group,wall+"_Left",isH?gapL:t,h,isH?(-wallLen+gapL)/2:x,h/2,isH?z:0);
+      box(group,wall+"_Right",isH?gapR:t,h,isH?(wallLen-gapR)/2:x,h/2,isH?z:0);
+    }
+  }
+  function applyOpening(reset){
+    if(!shellGroup)return;
+    const children=[...shellGroup.children];
+    const r=room(), wall=$('v22Wall').value;
+    const names=[wall+"Wall",wall+"_Top",wall+"_Left",wall+"_Right",wall+"_Lower",wall+"_Upper"];
+    children.forEach(o=>{if(names.includes(o.name))shellGroup.remove(o);});
+    if(reset || !opening){
+      const L=r.L/1000,W=r.W/1000,H=r.H/1000,t=.06;
+      if(wall==='back')box(shellGroup,"backWall",L,H,t,0,H/2,-W/2);
+      if(wall==='front')box(shellGroup,"frontWall",L,H,t,0,H/2,W/2);
+      if(wall==='left')box(shellGroup,"leftWall",t,H,W,-L/2,H/2,0);
+      if(wall==='right')box(shellGroup,"rightWall",t,H,W,L/2,H/2,0);
+      return;
+    }
+    segmentedWall(shellGroup,wall,Number($('v22OW').value)||900,Number($('v22OH').value)||2100,Number($('v22Pos').value)||0);
+  }
+  function addOpening(type){
+    if(!shellGroup)build();
+    opening={type:type};
+    applyOpening(false);
+    $('v22Status').textContent=(type==='door'?'Door':'Window')+' opening created · '+$('v22OW').value+' × '+$('v22OH').value+' mm';
+  }
+  $('v22BuildWalls').onclick=build;
+  $('v22ClearWalls').onclick=()=>{clearGroup(shellGroup);shellGroup=null;opening=null;$('v22Status').textContent='Room shell cleared';};
+  $('v22Door').onclick=()=>addOpening('door');
+  $('v22Window').onclick=()=>addOpening('window');
+  $('v22RemoveOpening').onclick=()=>{if(shellGroup){opening=null;applyOpening(true);$('v22Status').textContent='Opening removed';}};
+  $('v22Wall').onchange=()=>{if(opening)applyOpening(false);};
+  $('v22Pos').oninput=()=>{if(opening)applyOpening(false);};
+  $('v22OW').oninput=()=>{if(opening)applyOpening(false);};
+  $('v22OH').oninput=()=>{if(opening)applyOpening(false);};
+})();
+</script>
+
+<style>#v22Workspace{position:fixed;right:14px;top:14px;z-index:10003;width:310px;background:rgba(15,18,24,.97);color:#fff;border:1px solid #4b5563;border-radius:14px;padding:12px;font:13px system-ui;box-shadow:0 10px 35px #0006}#v22Workspace .r{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}#v22Workspace button,#v22Workspace select,#v22Workspace input{background:#252b36;color:#fff;border:1px solid #596273;border-radius:8px;padding:6px}#v22Info{font-size:11px;opacity:.82}</style><div id="v22Workspace"><b>V22 Professional Design Workspace</b><div class="r"><button id="v22m">Measure</button><button id="v22a">Align Wall</button><button id="v22g">Ground</button><button id="v22c">Center</button></div><div class="r"><select id="v22v"><option>3D Perspective</option><option>Front View</option><option>Top View</option><option>Left View</option><option>Right View</option></select><button id="v22fit">Fit Room</button></div><div class="r"><select id="v22w"><option value="back">Back</option><option value="front">Front</option><option value="left">Left</option><option value="right">Right</option></select><input id="v22o" type="number" value="0" step="10" title="offset mm"><button id="v22kp">Presentation</button></div><div id="v22Info">Select an object to use workspace tools.</div></div><script>(function(){const $=i=>document.getElementById(i),S=()=>window.selected||window.activeObject,R=()=>{let r=window.RR_V20_ROOM||window.RR_V21_ROOM||{};return{L:+(r.length||r.L||3600),W:+(r.width||r.W||3600),H:+(r.height||r.H||2700)}};function d(o){let u=o&&o.userData||{};return{w:+(u.width||u.w||600)/1000,h:+(u.height||u.h||720)/1000,dep:+(u.depth||u.d||560)/1000}}function ref(){try{window.refreshUI&&window.refreshUI()}catch(e){}}function ground(){let o=S();if(!o)return $('v22Info').textContent='Select an object first.';o.position.y=d(o).h/2;ref();$('v22Info').textContent='Grounded to floor.'}function center(){let o=S();if(!o)return;$('v22Info').textContent='Centered in room.';o.position.x=o.position.z=0;ref()}function align(){let o=S();if(!o)return $('v22Info').textContent='Select an object first.';let r=R(),x=d(o),w=$('v22w').value,off=(+$('v22o').value||0)/1000;if(w==='back'){o.position.z=-r.W/2000+x.dep/2+off;o.rotation.y=0}if(w==='front'){o.position.z=r.W/2000-x.dep/2-off;o.rotation.y=Math.PI}if(w==='left'){o.position.x=-r.L/2000+x.dep/2+off;o.rotation.y=Math.PI/2}if(w==='right'){o.position.x=r.L/2000-x.dep/2-off;o.rotation.y=-Math.PI/2}ref();$('v22Info').textContent='Aligned to '+w+' wall.'}function measure(){let o=S();if(!o)return;$('v22Info').textContent='Size '+Math.round(d(o).w*1000)+' × '+Math.round(d(o).h*1000)+' × '+Math.round(d(o).dep*1000)+' mm | X '+Math.round(o.position.x*1000)+' Z '+Math.round(o.position.z*1000)+' mm'}function view(v){let c=window.camera,ct=window.controls,r=R();if(!c||!ct)return;let L=r.L/1000,W=r.W/1000,H=r.H/1000;c.position=v==='Front View'?[0,H/2,W*1.7]:v==='Top View'?[0,H*2,.01]:v==='Left View'?[-L*1.7,H/2,0]:v==='Right View'?[L*1.7,H/2,0]:[L*1.25,H*1.05,W*1.25];ct.target.set(0,H/2,0);ct.update()}$('v22g').onclick=ground;$('v22c').onclick=center;$('v22a').onclick=align;$('v22m').onclick=measure;$('v22v').onchange=e=>view(e.target.value);$('v22fit').onclick=()=>{try{window.fitRoom?window.fitRoom():view('3D Perspective')}catch(e){view('3D Perspective')}};$('v22kp').onclick=()=>$('v22Info').textContent='Kitchen presentation mode enabled.'})()</script></body></html>
