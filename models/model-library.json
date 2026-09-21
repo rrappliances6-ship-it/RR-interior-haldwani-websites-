@@ -1,0 +1,88 @@
+{
+  "version": "62.0",
+  "models": [
+    {
+      "id": "base600",
+      "name": "Base Cabinet 600",
+      "category": "Cabinets",
+      "file": "cabinets/base-cabinet-600.glb",
+      "w": 600,
+      "h": 820,
+      "d": 560
+    },
+    {
+      "id": "wall600",
+      "name": "Wall Cabinet 600",
+      "category": "Cabinets",
+      "file": "cabinets/wall-cabinet-600.glb",
+      "w": 600,
+      "h": 720,
+      "d": 320
+    },
+    {
+      "id": "pantry600",
+      "name": "Tall Pantry 600",
+      "category": "Cabinets",
+      "file": "cabinets/tall-pantry-600.glb",
+      "w": 600,
+      "h": 2100,
+      "d": 600
+    },
+    {
+      "id": "drawer600",
+      "name": "3 Drawer Unit 600",
+      "category": "Cabinets",
+      "file": "cabinets/drawer-unit-600.glb",
+      "w": 600,
+      "h": 820,
+      "d": 560
+    },
+    {
+      "id": "hob600",
+      "name": "Hob 600",
+      "category": "Appliances",
+      "file": "appliances/hob-600.glb",
+      "w": 600,
+      "h": 50,
+      "d": 500
+    },
+    {
+      "id": "sink600",
+      "name": "Sink 600",
+      "category": "Appliances",
+      "file": "appliances/sink-600.glb",
+      "w": 600,
+      "h": 70,
+      "d": 500
+    },
+    {
+      "id": "chimney600",
+      "name": "Chimney 600",
+      "category": "Appliances",
+      "file": "appliances/chimney-600.glb",
+      "w": 600,
+      "h": 950,
+      "d": 350
+    },
+    {
+      "id": "shelf600",
+      "name": "Open Shelf 600",
+      "category": "Free Elements",
+      "file": "free-elements/open-shelf-600.glb",
+      "w": 600,
+      "h": 350,
+      "d": 280
+    },
+    {
+      "id": "base-single-door-600",
+      "name": "Single Door Base • Real GLB",
+      "category": "Base Cabinet",
+      "file": "cabinets/base-single-door-600.glb",
+      "w": 600,
+      "h": 720,
+      "d": 560,
+      "handle": "G-Profile",
+      "asset_type": "self-created procedural starter asset"
+    }
+  ]
+}
