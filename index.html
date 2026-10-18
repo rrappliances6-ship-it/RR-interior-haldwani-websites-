@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RR 3D Kitchen Planner - Three.js Sink</title>
+<style>
+  *{box-sizing:border-box} html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#151a1f;font-family:Arial,sans-serif;color:#fff}
+  #scene{position:fixed;inset:0} .panel{position:fixed;z-index:2;background:rgba(18,25,31,.88);backdrop-filter:blur(8px);border:1px solid #ffffff24;border-radius:14px;padding:14px 16px}
+  #title{top:14px;left:14px;max-width:calc(100% - 28px)} #title strong{font-size:20px;letter-spacing:.2px} #title small{display:block;color:#aebbc4;margin-top:5px}
+  #controls{right:14px;top:14px;width:180px} button{width:100%;margin:4px 0;padding:10px;border:1px solid #65717a;border-radius:9px;background:#28343d;color:white;font-weight:600;cursor:pointer} button:hover{background:#3b4b56}
+  #help{left:14px;bottom:14px;max-width:calc(100% - 28px);font-size:12px;color:#c5d0d7}
+  #status{color:#9fd5ff;font-size:12px;margin-top:8px}
+  @media(max-width:600px){#controls{top:auto;bottom:75px;right:10px;width:135px;padding:8px}button{padding:8px;font-size:12px}#title{padding:10px 12px}#title strong{font-size:16px}}
+</style>
+</head>
+<body>
+<div id="scene"></div>
+<div class="panel" id="title"><strong>RR 3D Kitchen Planner · Double Bowl Sink</strong><small>Three.js interactive model · stainless steel · chrome faucet</small></div>
+<div class="panel" id="controls">
+  <button id="reset">Reset view</button>
+  <button id="top">Top view</button>
+  <button id="faucet">Show / hide faucet</button>
+  <button id="cabinet">Show / hide cabinet</button>
+  <div id="status">Drag to rotate · scroll/pinch to zoom</div>
+</div>
+<div class="panel" id="help">Model preview only — dimensions are illustrative. Drag to orbit, scroll to zoom, right-drag to pan.</div>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+
+const host=document.getElementById('scene');
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0x1b2228);
+const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,0.1,100);
+camera.position.set(5.8,4.6,7.2);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputColorSpace=THREE.SRGBColorSpace; renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.15;
+host.appendChild(renderer.domElement);
+const controls=new OrbitControls(camera,renderer.domElement); controls.target.set(0,1.25,0); controls.enableDamping=true; controls.minDistance=3; controls.maxDistance=14; controls.maxPolarAngle=Math.PI*.49;
+
+scene.add(new THREE.HemisphereLight(0xdcecff,0x4a3b2e,2.1));
+const key=new THREE.DirectionalLight(0xfff1dd,3.2); key.position.set(-4,8,5); key.castShadow=true; key.shadow.mapSize.set(2048,2048); scene.add(key);
+const fill=new THREE.DirectionalLight(0xb7d9ff,2.2); fill.position.set(5,4,-4); scene.add(fill);
+const strip=new THREE.PointLight(0xffffff,35,12); strip.position.set(0,5,2); scene.add(strip);
+
+const steel=new THREE.MeshStandardMaterial({color:0xb9c3c9,metalness:.92,roughness:.22});
+const steelDark=new THREE.MeshStandardMaterial({color:0x56616a,metalness:.85,roughness:.27});
+const chrome=new THREE.MeshStandardMaterial({color:0xdce5eb,metalness:1,roughness:.12});
+const black=new THREE.MeshStandardMaterial({color:0x171b1e,metalness:.25,roughness:.3});
+const stone=new THREE.MeshStandardMaterial({color:0x24272a,metalness:.12,roughness:.28});
+const wood=new THREE.MeshStandardMaterial({color:0x8a5a32,roughness:.65});
+const inside=new THREE.MeshStandardMaterial({color:0x6f7a81,metalness:.83,roughness:.3,side:THREE.DoubleSide});
+function box(w,h,d,mat,x,y,z,parent=scene){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m}
+function cyl(r1,r2,h,mat,x,y,z,seg=48){const m=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,seg),mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;scene.add(m);return m}
+function torus(r,t,mat,x,y,z,rx=Math.PI/2){const m=new THREE.Mesh(new THREE.TorusGeometry(r,t,12,64),mat);m.position.set(x,y,z);m.rotation.x=rx;m.castShadow=true;scene.add(m);return m}
+function tube(points,r,mat,parent=scene){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));const m=new THREE.Mesh(new THREE.TubeGeometry(curve,80,r,16,false),mat);m.castShadow=true;parent.add(m);return m}
+
+// Countertop and cabinet
+box(5.6,.18,3.2,stone,0,2.45,0);
+box(5.6,.025,3.2,black,0,2.35,0);
+const cab=new THREE.Group(); scene.add(cab);
+box(5.2,1.55,2.75,wood,0,1.48,0,cab);
+box(5.25,1.52,2.78,black,0,1.49,.03,cab);
+for(let i=0;i<4;i++){
+  const x=-1.95+i*1.3;
+  box(1.23,1.42,.08,wood,x,1.48,1.42,cab);
+  box(.035,1.24,.025,black,x+.55,1.48,1.47,cab);
+  box(.22,.035,.05,black,x,1.62,1.49,cab);
+}
+// cabinet side edges
+box(.08,1.52,2.75,wood,-2.62,1.48,0,cab); box(.08,1.52,2.75,wood,2.62,1.48,0,cab);
+
+// Sink: two inset bowls with sloped inner surfaces and thick rounded-looking rims
+const sinkGroup=new THREE.Group(); scene.add(sinkGroup);
+const bowlY=2.345, bowlZ=.05;
+function makeBowl(cx, width=1.45, depth=1.72){
+  // Outer shell, inner sloped floor and four sloping side panels
+  const topY=bowlY, bottomY=1.93, topW=width, topD=depth, botW=width-.34, botD=depth-.34;
+  // dark outer body
+  box(topW,.10,topD,steelDark,cx,topY-.11,bowlZ,sinkGroup);
+  // bottom plate
+  box(botW,.035,botD,inside,cx,bottomY,bowlZ,sinkGroup);
+  // side panels slanted from bottom to top
+  function panelBetween(a,b,c,d,mat){
+    const geom=new THREE.BufferGeometry();
+    const verts=[...a,...b,...c,...a,...c,...d];
+    geom.setAttribute('position',new THREE.Float32BufferAttribute(verts,3)); geom.computeVertexNormals();
+    const mesh=new THREE.Mesh(geom,mat); mesh.material=mat; mesh.castShadow=true; mesh.receiveShadow=true;sinkGroup.add(mesh);
+  }
+  const xL=cx-topW/2, xR=cx+topW/2, zF=bowlZ+topD/2, zB=bowlZ-topD/2;
+  const bxL=cx-botW/2,bxR=cx+botW/2,bzF=bowlZ+botD/2,bzB=bowlZ-botD/2;
+  panelBetween([xL,topY-.13,zF],[xR,topY-.13,zF],[bxR,bottomY,bzF],[bxL,bottomY,bzF],inside);
+  panelBetween([xR,topY-.13,zB],[xL,topY-.13,zB],[bxL,bottomY,bzB],[bxR,bottomY,bzB],inside);
+  panelBetween([xL,topY-.13,zB],[xL,topY-.13,zF],[bxL,bottomY,bzF],[bxL,bottomY,bzB],inside);
+  panelBetween([xR,topY-.13,zF],[xR,topY-.13,zB],[bxR,bottomY,bzB],[bxR,bottomY,bzF],inside);
+  // bright steel perimeter rails
+  box(topW+.08,.055,.075,chrome,cx,topY-.015,zF+.015,sinkGroup);
+  box(topW+.08,.055,.075,chrome,cx,topY-.015,zB-.015,sinkGroup);
+  box(.075,.055,topD,chrome,xL-.015,topY-.015,bowlZ,sinkGroup);
+  box(.075,.055,topD,chrome,xR+.015,topY-.015,bowlZ,sinkGroup);
+  // drain assembly
+  const dx=cx, dz=bowlZ+.22;
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(.17,.025,12,64),chrome); ring.rotation.x=Math.PI/2; ring.position.set(dx,bottomY+.035,dz); sinkGroup.add(ring);
+  const drain=new THREE.Mesh(new THREE.CylinderGeometry(.145,.145,.025,48),steelDark);drain.position.set(dx,bottomY+.02,dz);sinkGroup.add(drain);
+  const innerRing=new THREE.Mesh(new THREE.TorusGeometry(.105,.012,10,48),chrome);innerRing.rotation.x=Math.PI/2;innerRing.position.set(dx,bottomY+.04,dz);sinkGroup.add(innerRing);
+  const plug=new THREE.Mesh(new THREE.CylinderGeometry(.055,.055,.018,32),chrome);plug.position.set(dx,bottomY+.045,dz);sinkGroup.add(plug);
+  for(let i=0;i<12;i++){let a=i*Math.PI/6;let slot=box(.018,.006,.065,black,dx+Math.cos(a)*.105,bottomY+.037,dz+Math.sin(a)*.105,sinkGroup);slot.rotation.y=-a;}
+}
+makeBowl(-.83); makeBowl(.83);
+// central divider between basins
+box(.11,.11,1.78,chrome,0,bowlY-.035,bowlZ,sinkGroup);
+
+// faucet and soap dispenser
+const faucet=new THREE.Group();scene.add(faucet);
+cyl(.16,.19,.055,chrome,0,2.55,-1.23,48).parent=faucet;
+cyl(.105,.105,.48,chrome,0,2.80,-1.23,48).parent=faucet;
+tube([[0,3.0,-1.23],[0,3.22,-1.23],[0,3.42,-1.15],[0,3.48,-.98],[0,3.48,-.78],[0,3.42,-.68]],.065,chrome,faucet);
+tube([[0,3.42,-.68],[0,3.34,-.68],[0,3.27,-.68]],.055,steelDark,faucet);
+cyl(.055,.07,.18,chrome,.18,2.78,-1.23,32).parent=faucet;
+const lever=box(.05,.27,.055,chrome,.18,2.97,-1.23,faucet);lever.rotation.z=-.22;
+// soap dispenser
+cyl(.055,.065,.17,chrome,1.05,2.55,-1.22,32).parent=sinkGroup;
+tube([[1.05,2.65,-1.22],[1.05,2.72,-1.22],[1.16,2.72,-1.22]],.025,chrome,sinkGroup);
+
+// plumbing underneath both bowls
+const plumbing=new THREE.Group();scene.add(plumbing);
+function pipe(points,r=.045){tube(points,r,steelDark,plumbing)}
+pipe([[-.83,1.91,.27],[-.83,1.72,.27],[-.83,1.62,.27],[-.58,1.62,.27],[-.58,1.42,.27],[-.58,1.35,.27]]);
+pipe([[.83,1.91,.27],[.83,1.72,.27],[.83,1.62,.27],[.58,1.62,.27],[.58,1.42,.27],[.58,1.35,.27]]);
+pipe([[-.58,1.42,.27],[-.58,1.30,.27],[0,1.30,.27],[0,1.15,.27]],.055);
+cyl(.055,.055,.24,steelDark,0,1.08,.27,24);
+
+// floor and subtle studio environment
+const floorMat=new THREE.MeshStandardMaterial({color:0x343a3f,roughness:.7});
+box(200,.1,200,floorMat,0,.52,0);
+const grid=new THREE.GridHelper(20,40,0x58636b,0x333b42);grid.position.y=.575;scene.add(grid);
+
+// Button controls
+function setCamera(pos,target=new THREE.Vector3(0,1.75,0)){camera.position.copy(pos);controls.target.copy(target);controls.update()}
+document.getElementById('reset').onclick=()=>setCamera(new THREE.Vector3(5.8,4.6,7.2),new THREE.Vector3(0,1.7,0));
+document.getElementById('top').onclick=()=>setCamera(new THREE.Vector3(0,9,0.01),new THREE.Vector3(0,1.8,0));
+document.getElementById('faucet').onclick=()=>faucet.visible=!faucet.visible;
+document.getElementById('cabinet').onclick=()=>cab.visible=!cab.visible;
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera)} animate();
+</script>
+</body>
+</html>
